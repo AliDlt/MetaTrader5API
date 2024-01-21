@@ -4,6 +4,7 @@
 //|                                               www.metaquotes.net |
 //+------------------------------------------------------------------+
 using MetaQuotes.MT5WebAPI.Common.Utils;
+using MT5WebAPI.Common.Utils;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 //---
@@ -248,33 +249,33 @@ namespace MetaQuotes.MT5WebAPI.Common.Protocol
             MTTick obj = new();
             //---
             if (dictionary.ContainsKey("Symbol"))
-                obj.Symbol = MTDataHelper.GetString(dictionary["Symbol"]);
+                obj.Symbol = ConvertHelper.TypeConversation<string>(dictionary["Symbol"]);
             //---
             if (dictionary.ContainsKey("Digits"))
-                obj.Digits = MTDataHelper.GetUInt32(dictionary["Digits"]);
+                obj.Digits = ConvertHelper.TypeConversation<UInt32>(dictionary["Digits"]);
             //---
             if (dictionary.ContainsKey("Bid"))
-                obj.Bid = MTDataHelper.GetDouble(dictionary["Bid"]);
+                obj.Bid = ConvertHelper.TypeConversation<double>(dictionary["Bid"]);
             //---
             if (dictionary.ContainsKey("Ask"))
-                obj.Ask = MTDataHelper.GetDouble(dictionary["Ask"]);
+                obj.Ask = ConvertHelper.TypeConversation<double>(dictionary["Ask"]);
             //---
             if (dictionary.ContainsKey("Last"))
-                obj.Last = MTDataHelper.GetDouble(dictionary["Last"]);
+                obj.Last = ConvertHelper.TypeConversation<double>(dictionary["Last"]);
             //---
             if (dictionary.ContainsKey("Volume"))
-                obj.Volume = MTDataHelper.GetUInt64(dictionary["Volume"]);
+                obj.Volume = ConvertHelper.TypeConversation<UInt64>(dictionary["Volume"]);
             //---
             if (dictionary.ContainsKey("VolumeReal"))
-                obj.VolumeReal = MTDataHelper.GetDouble(dictionary["VolumeReal"]);
+                obj.VolumeReal = ConvertHelper.TypeConversation<double>(dictionary["VolumeReal"]);
             else
                 obj.VolumeReal = (double)obj.Volume;
             //---
             if (dictionary.ContainsKey("Datetime"))
-                obj.Datetime = MTDataHelper.GetUInt64(dictionary["Datetime"]);
+                obj.Datetime = ConvertHelper.TypeConversation<UInt64>(dictionary["Datetime"]);
             //---
             if (dictionary.ContainsKey("DatetimeMsc"))
-                obj.DatetimeMsc = MTDataHelper.GetUInt64(dictionary["DatetimeMsc"]);
+                obj.DatetimeMsc = ConvertHelper.TypeConversation<UInt64>(dictionary["DatetimeMsc"]);
             else
                 obj.DatetimeMsc = obj.Datetime * 1000;
             //---
@@ -347,121 +348,121 @@ namespace MetaQuotes.MT5WebAPI.Common.Protocol
             MTTickStat obj = new();
             //---
             if (dictionary.ContainsKey("Symbol"))
-                obj.Symbol = MTDataHelper.GetString(dictionary["Symbol"]);
+                obj.Symbol = ConvertHelper.TypeConversation<string>(dictionary["Symbol"]);
             //---
             if (dictionary.ContainsKey("Digits"))
-                obj.Digits = MTDataHelper.GetUInt32(dictionary["Digits"]);
+                obj.Digits = ConvertHelper.TypeConversation<UInt32>(dictionary["Digits"]);
             //---
             if (dictionary.ContainsKey("Bid"))
-                obj.Bid = MTDataHelper.GetDouble(dictionary["Bid"]);
+                obj.Bid = ConvertHelper.TypeConversation<double>(dictionary["Bid"]);
             //---
             if (dictionary.ContainsKey("BidLow"))
-                obj.BidLow = MTDataHelper.GetDouble(dictionary["BidLow"]);
+                obj.BidLow = ConvertHelper.TypeConversation<double>(dictionary["BidLow"]);
             //---
             if (dictionary.ContainsKey("BidHigh"))
-                obj.BidHigh = MTDataHelper.GetDouble(dictionary["BidHigh"]);
+                obj.BidHigh = ConvertHelper.TypeConversation<double>(dictionary["BidHigh"]);
             //---
             if (dictionary.ContainsKey("BidDir"))
-                obj.BidDir = (MTTickStat.EnDirection)MTDataHelper.GetUInt32(dictionary["BidDir"]);
+                obj.BidDir = (MTTickStat.EnDirection)ConvertHelper.TypeConversation<UInt32>(dictionary["BidDir"]);
             //---
             if (dictionary.ContainsKey("Ask"))
-                obj.Ask = MTDataHelper.GetDouble(dictionary["Ask"]);
+                obj.Ask = ConvertHelper.TypeConversation<double>(dictionary["Ask"]);
             //---
             if (dictionary.ContainsKey("AskLow"))
-                obj.AskLow = MTDataHelper.GetDouble(dictionary["AskLow"]);
+                obj.AskLow = ConvertHelper.TypeConversation<double>(dictionary["AskLow"]);
             //---
             if (dictionary.ContainsKey("AskHigh"))
-                obj.AskHigh = MTDataHelper.GetDouble(dictionary["AskHigh"]);
+                obj.AskHigh = ConvertHelper.TypeConversation<double>(dictionary["AskHigh"]);
             //---
             if (dictionary.ContainsKey("AskDir"))
-                obj.AskDir = (MTTickStat.EnDirection)MTDataHelper.GetUInt32(dictionary["AskDir"]);
+                obj.AskDir = (MTTickStat.EnDirection)ConvertHelper.TypeConversation<UInt32>(dictionary["AskDir"]);
             //---
             if (dictionary.ContainsKey("Last"))
-                obj.Last = MTDataHelper.GetDouble(dictionary["Last"]);
+                obj.Last = ConvertHelper.TypeConversation<double>(dictionary["Last"]);
             //---
             if (dictionary.ContainsKey("LastLow"))
-                obj.LastLow = MTDataHelper.GetDouble(dictionary["LastLow"]);
+                obj.LastLow = ConvertHelper.TypeConversation<double>(dictionary["LastLow"]);
             //---
             if (dictionary.ContainsKey("LastHigh"))
-                obj.LastHigh = MTDataHelper.GetDouble(dictionary["LastHigh"]);
+                obj.LastHigh = ConvertHelper.TypeConversation<double>(dictionary["LastHigh"]);
             //---
             if (dictionary.ContainsKey("LastDir"))
-                obj.LastDir = (MTTickStat.EnDirection)MTDataHelper.GetUInt32(dictionary["LastDir"]);
+                obj.LastDir = (MTTickStat.EnDirection)ConvertHelper.TypeConversation<UInt32>(dictionary["LastDir"]);
             //---
             if (dictionary.ContainsKey("Volume"))
-                obj.Volume = MTDataHelper.GetUInt64(dictionary["Volume"]);
+                obj.Volume = ConvertHelper.TypeConversation<UInt64>(dictionary["Volume"]);
             if (dictionary.ContainsKey("VolumeReal"))
-                obj.VolumeReal = MTDataHelper.GetDouble(dictionary["VolumeReal"]);
+                obj.VolumeReal = ConvertHelper.TypeConversation<double>(dictionary["VolumeReal"]);
             else
                 obj.VolumeReal = (double)obj.Volume;
             //---
             if (dictionary.ContainsKey("VolumeLow"))
-                obj.VolumeLow = MTDataHelper.GetUInt64(dictionary["VolumeLow"]);
+                obj.VolumeLow = ConvertHelper.TypeConversation<UInt64>(dictionary["VolumeLow"]);
             if (dictionary.ContainsKey("VolumeLowReal"))
-                obj.VolumeLowReal = MTDataHelper.GetDouble(dictionary["VolumeLowReal"]);
+                obj.VolumeLowReal = ConvertHelper.TypeConversation<double>(dictionary["VolumeLowReal"]);
             else
                 obj.VolumeLowReal = (double)obj.VolumeLow;
             //---
             if (dictionary.ContainsKey("VolumeHigh"))
-                obj.VolumeHigh = MTDataHelper.GetUInt64(dictionary["VolumeHigh"]);
+                obj.VolumeHigh = ConvertHelper.TypeConversation<UInt64>(dictionary["VolumeHigh"]);
             if (dictionary.ContainsKey("VolumeHighReal"))
-                obj.VolumeHighReal = MTDataHelper.GetDouble(dictionary["VolumeHighReal"]);
+                obj.VolumeHighReal = ConvertHelper.TypeConversation<double>(dictionary["VolumeHighReal"]);
             else
                 obj.VolumeHighReal = (double)obj.VolumeHigh;
             //---
             if (dictionary.ContainsKey("VolumeDir"))
-                obj.VolumeDir = (MTTickStat.EnDirection)MTDataHelper.GetUInt32(dictionary["VolumeDir"]);
+                obj.VolumeDir = (MTTickStat.EnDirection)ConvertHelper.TypeConversation<UInt32>(dictionary["VolumeDir"]);
             //---
             if (dictionary.ContainsKey("TradeDeals"))
-                obj.TradeDeals = MTDataHelper.GetUInt64(dictionary["TradeDeals"]);
+                obj.TradeDeals = ConvertHelper.TypeConversation<UInt64>(dictionary["TradeDeals"]);
             //---
             if (dictionary.ContainsKey("TradeVolume"))
-                obj.TradeVolume = MTDataHelper.GetUInt64(dictionary["TradeVolume"]);
+                obj.TradeVolume = ConvertHelper.TypeConversation<UInt64>(dictionary["TradeVolume"]);
             if (dictionary.ContainsKey("TradeVolumeReal"))
-                obj.TradeVolumeReal = MTDataHelper.GetDouble(dictionary["TradeVolumeReal"]);
+                obj.TradeVolumeReal = ConvertHelper.TypeConversation<double>(dictionary["TradeVolumeReal"]);
             else
                 obj.TradeVolumeReal = (double)obj.TradeVolume;
             //---
             if (dictionary.ContainsKey("TradeTurnover"))
-                obj.TradeTurnover = MTDataHelper.GetUInt64(dictionary["TradeTurnover"]);
+                obj.TradeTurnover = ConvertHelper.TypeConversation<UInt64>(dictionary["TradeTurnover"]);
             //---
             if (dictionary.ContainsKey("TradeInterest"))
-                obj.TradeInterest = MTDataHelper.GetUInt64(dictionary["TradeInterest"]);
+                obj.TradeInterest = ConvertHelper.TypeConversation<UInt64>(dictionary["TradeInterest"]);
             //---
             if (dictionary.ContainsKey("TradeBuyOrders"))
-                obj.TradeBuyOrders = MTDataHelper.GetUInt64(dictionary["TradeBuyOrders"]);
+                obj.TradeBuyOrders = ConvertHelper.TypeConversation<UInt64>(dictionary["TradeBuyOrders"]);
             //---
             if (dictionary.ContainsKey("TradeBuyVolume"))
-                obj.TradeBuyVolume = MTDataHelper.GetUInt64(dictionary["TradeBuyVolume"]);
+                obj.TradeBuyVolume = ConvertHelper.TypeConversation<UInt64>(dictionary["TradeBuyVolume"]);
             if (dictionary.ContainsKey("TradeBuyVolumeReal"))
-                obj.TradeBuyVolumeReal = MTDataHelper.GetDouble(dictionary["TradeBuyVolumeReal"]);
+                obj.TradeBuyVolumeReal = ConvertHelper.TypeConversation<double>(dictionary["TradeBuyVolumeReal"]);
             else
                 obj.TradeBuyVolumeReal = (double)obj.TradeBuyVolume;
             //---
             if (dictionary.ContainsKey("TradeSellOrders"))
-                obj.TradeSellOrders = MTDataHelper.GetUInt64(dictionary["TradeSellOrders"]);
+                obj.TradeSellOrders = ConvertHelper.TypeConversation<UInt64>(dictionary["TradeSellOrders"]);
             //---
             if (dictionary.ContainsKey("TradeSellVolume"))
-                obj.TradeSellVolume = MTDataHelper.GetUInt64(dictionary["TradeSellVolume"]);
+                obj.TradeSellVolume = ConvertHelper.TypeConversation<UInt64>(dictionary["TradeSellVolume"]);
             if (dictionary.ContainsKey("TradeSellVolumeReal"))
-                obj.TradeSellVolumeReal = MTDataHelper.GetDouble(dictionary["TradeSellVolumeReal"]);
+                obj.TradeSellVolumeReal = ConvertHelper.TypeConversation<double>(dictionary["TradeSellVolumeReal"]);
             else
                 obj.TradeSellVolumeReal = (double)obj.TradeSellVolume;
             //---
             if (dictionary.ContainsKey("PriceOpen"))
-                obj.PriceOpen = MTDataHelper.GetDouble(dictionary["PriceOpen"]);
+                obj.PriceOpen = ConvertHelper.TypeConversation<double>(dictionary["PriceOpen"]);
             //---
             if (dictionary.ContainsKey("PriceClose"))
-                obj.PriceClose = MTDataHelper.GetDouble(dictionary["PriceClose"]);
+                obj.PriceClose = ConvertHelper.TypeConversation<double>(dictionary["PriceClose"]);
             //---
             if (dictionary.ContainsKey("PriceChange"))
-                obj.PriceChange = MTDataHelper.GetDouble(dictionary["PriceChange"]);
+                obj.PriceChange = ConvertHelper.TypeConversation<double>(dictionary["PriceChange"]);
             //---
             if (dictionary.ContainsKey("PriceVolatility"))
-                obj.PriceVolatility = MTDataHelper.GetDouble(dictionary["PriceVolatility"]);
+                obj.PriceVolatility = ConvertHelper.TypeConversation<double>(dictionary["PriceVolatility"]);
             //---
             if (dictionary.ContainsKey("PriceTheoretical"))
-                obj.PriceTheoretical = MTDataHelper.GetDouble(dictionary["PriceTheoretical"]);
+                obj.PriceTheoretical = ConvertHelper.TypeConversation<double>(dictionary["PriceTheoretical"]);
             //---
             return obj;
         }

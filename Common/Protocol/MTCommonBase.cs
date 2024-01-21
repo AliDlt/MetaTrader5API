@@ -4,6 +4,7 @@
 //|                                               www.metaquotes.net |
 //+------------------------------------------------------------------+
 using MetaQuotes.MT5WebAPI.Common.Utils;
+using MT5WebAPI.Common.Utils;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 //---
@@ -141,73 +142,73 @@ namespace MetaQuotes.MT5WebAPI.Common.Protocol
                     switch (propertyName)
                     {
                         case "Name":
-                            obj.Name = MTDataHelper.GetString(reader.GetString());
+                            obj.Name = ConvertHelper.TypeConversation<string>(reader.GetString());
                             break;
                         case "Owner":
-                            obj.Owner = MTDataHelper.GetString(reader.GetString());
+                            obj.Owner = ConvertHelper.TypeConversation<string>(reader.GetString());
                             break;
                         case "OwnerID":
-                            obj.OwnerID = MTDataHelper.GetString(reader.GetString());
+                            obj.OwnerID = ConvertHelper.TypeConversation<string>(reader.GetString());
                             break;
                         case "OwnerHost":
-                            obj.OwnerHost = MTDataHelper.GetString(reader.GetString());
+                            obj.OwnerHost = ConvertHelper.TypeConversation<string>(reader.GetString());
                             break;
                         case "OwnerEmail":
-                            obj.OwnerEmail = MTDataHelper.GetString(reader.GetString());
+                            obj.OwnerEmail = ConvertHelper.TypeConversation<string>(reader.GetString());
                             break;
                         case "Product":
-                            obj.Product = MTDataHelper.GetString(reader.GetString());
+                            obj.Product = ConvertHelper.TypeConversation<string>(reader.GetString());
                             break;
                         case "ExpirationLicense":
-                            obj.ExpirationLicense = MTDataHelper.GetInt64(reader.GetInt64());
+                            obj.ExpirationLicense = ConvertHelper.TypeConversation<Int64>(reader.GetInt64());
                             break;
                         case "ExpirationSupport":
-                            obj.ExpirationSupport = MTDataHelper.GetInt64(reader.GetInt64());
+                            obj.ExpirationSupport = ConvertHelper.TypeConversation<Int64>(reader.GetInt64());
                             break;
                         case "LimitTradeServers":
-                            obj.LimitTradeServers = MTDataHelper.GetUInt32(reader.GetUInt32());
+                            obj.LimitTradeServers = ConvertHelper.TypeConversation<UInt32>(reader.GetUInt32());
                             break;
                         case "LimitWebServers":
-                            obj.LimitWebServers = MTDataHelper.GetUInt32(reader.GetUInt32());
+                            obj.LimitWebServers = ConvertHelper.TypeConversation<UInt32>(reader.GetUInt32());
                             break;
                         case "LimitAccounts":
-                            obj.LimitAccounts = MTDataHelper.GetUInt32(reader.GetUInt32());
+                            obj.LimitAccounts = ConvertHelper.TypeConversation<UInt32>(reader.GetUInt32());
                             break;
                         case "LimitDeals":
-                            obj.LimitDeals = MTDataHelper.GetUInt32(reader.GetUInt32());
+                            obj.LimitDeals = ConvertHelper.TypeConversation<UInt32>(reader.GetUInt32());
                             break;
                         case "LimitSymbols":
-                            obj.LimitSymbols = MTDataHelper.GetUInt32(reader.GetUInt32());
+                            obj.LimitSymbols = ConvertHelper.TypeConversation<UInt32>(reader.GetUInt32());
                             break;
                         case "LimitGroups":
-                            obj.LimitGroups = MTDataHelper.GetUInt32(reader.GetUInt32());
+                            obj.LimitGroups = ConvertHelper.TypeConversation<UInt32>(reader.GetUInt32());
                             break;
                         case "LiveUpdateMode":
-                            obj.LiveUpdateMode = (EnUpdateMode)MTDataHelper.GetUInt32(reader.GetUInt32());
+                            obj.LiveUpdateMode = (EnUpdateMode)ConvertHelper.TypeConversation<UInt32>(reader.GetUInt32());
                             break;
                         case "TotalUsers":
-                            obj.TotalUsers = MTDataHelper.GetUInt32(reader.GetUInt32());
+                            obj.TotalUsers = ConvertHelper.TypeConversation<UInt32>(reader.GetUInt32());
                             break;
                         case "TotalUsersReal":
-                            obj.TotalUsersReal = MTDataHelper.GetUInt32(reader.GetUInt32());
+                            obj.TotalUsersReal = ConvertHelper.TypeConversation<UInt32>(reader.GetUInt32());
                             break;
                         case "TotalDeals":
-                            obj.TotalDeals = MTDataHelper.GetUInt32(reader.GetUInt32());
+                            obj.TotalDeals = ConvertHelper.TypeConversation<UInt32>(reader.GetUInt32());
                             break;
                         case "TotalOrders":
-                            obj.TotalOrders = MTDataHelper.GetUInt32(reader.GetUInt32());
+                            obj.TotalOrders = ConvertHelper.TypeConversation<UInt32>(reader.GetUInt32());
                             break;
                         case "TotalOrdersHistory":
-                            obj.TotalOrdersHistory = MTDataHelper.GetUInt32(reader.GetUInt32());
+                            obj.TotalOrdersHistory = ConvertHelper.TypeConversation<UInt32>(reader.GetUInt32());
                             break;
                         case "TotalPositions":
-                            obj.TotalPositions = MTDataHelper.GetUInt32(reader.GetUInt32());
+                            obj.TotalPositions = ConvertHelper.TypeConversation<UInt32>(reader.GetUInt32());
                             break;
                         case "AccountUrl":
-                            obj.AccountURL = MTDataHelper.GetString(reader.GetString());
+                            obj.AccountURL = ConvertHelper.TypeConversation<string>(reader.GetString());
                             break;
                         case "AccountAuto":
-                            obj.AccountAuto = MTDataHelper.GetUInt32(reader.GetUInt32());
+                            obj.AccountAuto = ConvertHelper.TypeConversation<UInt32>(reader.GetUInt32());
                             break;
                     }
                 }

@@ -4,6 +4,7 @@
 //|                                               www.metaquotes.net |
 //+------------------------------------------------------------------+
 using MetaQuotes.MT5WebAPI.Common.Utils;
+using MT5WebAPI.Common.Utils;
 using System.Collections;
 using System.Text;
 using System.Text.Json;
@@ -365,43 +366,43 @@ namespace MetaQuotes.MT5WebAPI.Common.Protocol
             MTConSymbol conSymbol = new();
             //---
             if (symbol.ContainsKey("Symbol"))
-                conSymbol.Symbol = MTDataHelper.GetString(symbol["Symbol"]);
+                conSymbol.Symbol = ConvertHelper.TypeConversation<string>(symbol["Symbol"]);
             //---
             if (symbol.ContainsKey("Path"))
-                conSymbol.Path = MTDataHelper.GetString(symbol["Path"]);
+                conSymbol.Path = ConvertHelper.TypeConversation<string>(symbol["Path"]);
             //---
             if (symbol.ContainsKey("ISIN"))
-                conSymbol.ISIN = MTDataHelper.GetString(symbol["ISIN"]);
+                conSymbol.ISIN = ConvertHelper.TypeConversation<string>(symbol["ISIN"]);
             //---
             if (symbol.ContainsKey("Description"))
-                conSymbol.Description = MTDataHelper.GetString(symbol["Description"]);
+                conSymbol.Description = ConvertHelper.TypeConversation<string>(symbol["Description"]);
             //---
             if (symbol.ContainsKey("International"))
-                conSymbol.International = MTDataHelper.GetString(symbol["International"]);
+                conSymbol.International = ConvertHelper.TypeConversation<string>(symbol["International"]);
             //---
             if (symbol.ContainsKey("Basis"))
-                conSymbol.Basis = MTDataHelper.GetString(symbol["Basis"]);
+                conSymbol.Basis = ConvertHelper.TypeConversation<string>(symbol["Basis"]);
             //---
             if (symbol.ContainsKey("Source"))
-                conSymbol.Source = MTDataHelper.GetString(symbol["Source"]);
+                conSymbol.Source = ConvertHelper.TypeConversation<string>(symbol["Source"]);
             //---
             if (symbol.ContainsKey("Page"))
-                conSymbol.Page = MTDataHelper.GetString(symbol["Page"]);
+                conSymbol.Page = ConvertHelper.TypeConversation<string>(symbol["Page"]);
             //---
             if (symbol.ContainsKey("CurrencyBase"))
-                conSymbol.CurrencyBase = MTDataHelper.GetString(symbol["CurrencyBase"]);
+                conSymbol.CurrencyBase = ConvertHelper.TypeConversation<string>(symbol["CurrencyBase"]);
             //---
             if (symbol.ContainsKey("CurrencyBaseDigits"))
                 conSymbol.CurrencyBaseDigits = GetUInt(symbol["CurrencyBaseDigits"]);
             //---
             if (symbol.ContainsKey("CurrencyProfit"))
-                conSymbol.CurrencyProfit = MTDataHelper.GetString(symbol["CurrencyProfit"]);
+                conSymbol.CurrencyProfit = ConvertHelper.TypeConversation<string>(symbol["CurrencyProfit"]);
             //---
             if (symbol.ContainsKey("CurrencyProfitDigits"))
                 conSymbol.CurrencyProfitDigits = GetUInt(symbol["CurrencyProfitDigits"]);
             //---
             if (symbol.ContainsKey("CurrencyMargin"))
-                conSymbol.CurrencyMargin = MTDataHelper.GetString(symbol["CurrencyMargin"]);
+                conSymbol.CurrencyMargin = ConvertHelper.TypeConversation<string>(symbol["CurrencyMargin"]);
             //---
             if (symbol.ContainsKey("CurrencyMarginDigits"))
                 conSymbol.CurrencyMarginDigits = GetUInt(symbol["CurrencyMarginDigits"]);
@@ -656,13 +657,13 @@ namespace MetaQuotes.MT5WebAPI.Common.Protocol
                 conSymbol.IEFlags = (MTConSymbol.EnTradeInstantFlags)GetUInt(symbol["IEFlags"]);
             //---
             if (symbol.ContainsKey("Category"))
-                conSymbol.Category = MTDataHelper.GetString(symbol["Category"]);
+                conSymbol.Category = ConvertHelper.TypeConversation<string>(symbol["Category"]);
             //---
             if (symbol.ContainsKey("Exchange"))
-                conSymbol.Exchange = MTDataHelper.GetString(symbol["Exchange"]);
+                conSymbol.Exchange = ConvertHelper.TypeConversation<string>(symbol["Exchange"]);
             //---
             if (symbol.ContainsKey("CFI"))
-                conSymbol.Exchange = MTDataHelper.GetString(symbol["CFI"]);
+                conSymbol.Exchange = ConvertHelper.TypeConversation<string>(symbol["CFI"]);
             //---
             if (symbol.ContainsKey("Sector"))
                 conSymbol.Sector = (MTConSymbol.EnSectors)GetUInt(symbol["Sector"]);
@@ -671,7 +672,7 @@ namespace MetaQuotes.MT5WebAPI.Common.Protocol
                 conSymbol.Industry = (MTConSymbol.EnIndustries)GetUInt(symbol["Industry"]);
             //---
             if (symbol.ContainsKey("Country"))
-                conSymbol.Country = MTDataHelper.GetString(symbol["Country"]);
+                conSymbol.Country = ConvertHelper.TypeConversation<string>(symbol["Country"]);
             //---
             if (symbol.ContainsKey("SubscriptionsDelay"))
                 conSymbol.SubscriptionsDelay = GetUInt(symbol["SubscriptionsDelay"]);
@@ -823,16 +824,16 @@ namespace MetaQuotes.MT5WebAPI.Common.Protocol
             MTConSymbolSession obj = new();
             //---
             if (dictionary.ContainsKey("Open"))
-                obj.Open = MTDataHelper.GetUInt32(dictionary["Open"]);
+                obj.Open = ConvertHelper.TypeConversation<UInt32>(dictionary["Open"]);
             //---
             if (dictionary.ContainsKey("OpenHours"))
-                obj.OpenHours = MTDataHelper.GetUInt32(dictionary["OpenHours"]);
+                obj.OpenHours = ConvertHelper.TypeConversation<UInt32>(dictionary["OpenHours"]);
             //---
             if (dictionary.ContainsKey("Close"))
-                obj.Close = MTDataHelper.GetUInt32(dictionary["Close"]);
+                obj.Close = ConvertHelper.TypeConversation<UInt32>(dictionary["Close"]);
             //---
             if (dictionary.ContainsKey("CloseHours"))
-                obj.CloseHours = MTDataHelper.GetUInt32(dictionary["CloseHours"]);
+                obj.CloseHours = ConvertHelper.TypeConversation<UInt32>(dictionary["CloseHours"]);
             //---
             return obj;
         }
@@ -846,7 +847,7 @@ namespace MetaQuotes.MT5WebAPI.Common.Protocol
             MTConGroupSymbol conSymbol = new();
             //---
             if (groupSymbol.ContainsKey("Path"))
-                conSymbol.Path = MTDataHelper.GetString(groupSymbol["Path"]);
+                conSymbol.Path = ConvertHelper.TypeConversation<string>(groupSymbol["Path"]);
             //---
             if (groupSymbol.ContainsKey("TradeMode"))
                 conSymbol.TradeMode = (MTConSymbol.EnTradeMode)GetUInt(groupSymbol["TradeMode"]);
@@ -972,37 +973,37 @@ namespace MetaQuotes.MT5WebAPI.Common.Protocol
         }
         private static uint GetUInt(object obj)
         {
-            string temp = MTDataHelper.GetString(obj);
+            string temp = ConvertHelper.TypeConversation<string>(obj);
             //---
-            return temp == "default" ? MTConGroupSymbol.DEFAULT_VALUE_UINT : MTDataHelper.GetUInt32(obj);
+            return temp == "default" ? MTConGroupSymbol.DEFAULT_VALUE_UINT : ConvertHelper.TypeConversation<UInt32>(obj);
         }
 
         private static double GetDouble(object obj)
         {
-            string temp = MTDataHelper.GetString(obj);
+            string temp = ConvertHelper.TypeConversation<string>(obj);
             //---
-            return temp == "default" ? MTConGroupSymbol.DEFAULT_VALUE_DOUBLE : MTDataHelper.GetDouble(obj);
+            return temp == "default" ? MTConGroupSymbol.DEFAULT_VALUE_DOUBLE : ConvertHelper.TypeConversation<double>(obj);
         }
 
         private static int GetInt(object obj)
         {
-            string temp = MTDataHelper.GetString(obj);
+            string temp = ConvertHelper.TypeConversation<string>(obj);
             //---
-            return temp == "default" ? MTConGroupSymbol.DEFAULT_VALUE_INT : MTDataHelper.GetInt32(obj);
+            return temp == "default" ? MTConGroupSymbol.DEFAULT_VALUE_INT : ConvertHelper.TypeConversation<Int32>(obj);
         }
 
         private static ulong GetULong(object obj)
         {
-            string temp = MTDataHelper.GetString(obj);
+            string temp = ConvertHelper.TypeConversation<string>(obj);
             //---
-            return temp == "default" ? MTConGroupSymbol.DEFAULT_VALUE_UINT64 : MTDataHelper.GetUInt64(obj);
+            return temp == "default" ? MTConGroupSymbol.DEFAULT_VALUE_UINT64 : ConvertHelper.TypeConversation<UInt64>(obj);
         }
 
         private static long GetLong(object obj)
         {
-            string temp = MTDataHelper.GetString(obj);
+            string temp = ConvertHelper.TypeConversation<string>(obj);
             //---
-            return temp == "default" ? MTConGroupSymbol.DEFAULT_VALUE_INT64 : MTDataHelper.GetInt64(obj);
+            return temp == "default" ? MTConGroupSymbol.DEFAULT_VALUE_INT64 : ConvertHelper.TypeConversation<Int64>(obj);
         }
 
     }

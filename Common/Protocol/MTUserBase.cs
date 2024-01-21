@@ -4,6 +4,7 @@
 //|                                               www.metaquotes.net |
 //+------------------------------------------------------------------+
 using MetaQuotes.MT5WebAPI.Common.Utils;
+using MT5WebAPI.Common.Utils;
 using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -544,130 +545,130 @@ namespace MetaQuotes.MT5WebAPI.Common.Protocol
             MTUser obj = new();
             //---
             if (dictionary.ContainsKey("Login"))
-                obj.Login = MTDataHelper.GetUInt64(dictionary["Login"]);
+                obj.Login = ConvertHelper.TypeConversation<UInt64>(dictionary["Login"]);
             //---
             if (dictionary.ContainsKey("Group"))
-                obj.Group = MTDataHelper.GetString(dictionary["Group"]);
+                obj.Group = ConvertHelper.TypeConversation<string>(dictionary["Group"]);
             //---
             if (dictionary.ContainsKey("CertSerialNumber"))
-                obj.CertSerialNumber = MTDataHelper.GetUInt64(dictionary["CertSerialNumber"]);
+                obj.CertSerialNumber = ConvertHelper.TypeConversation<UInt64>(dictionary["CertSerialNumber"]);
             //---
             if (dictionary.ContainsKey("Rights"))
-                obj.Rights = (MTUser.EnUsersRights)MTDataHelper.GetUInt64(dictionary["Rights"]);
+                obj.Rights = (MTUser.EnUsersRights)ConvertHelper.TypeConversation<UInt64>(dictionary["Rights"]);
             //---
             if (dictionary.ContainsKey("MQID"))
-                obj.MQID = MTDataHelper.GetString(dictionary["MQID"]);
+                obj.MQID = ConvertHelper.TypeConversation<string>(dictionary["MQID"]);
             //---
             if (dictionary.ContainsKey("Registration"))
-                obj.Registration = MTDataHelper.GetInt64(dictionary["Registration"]);
+                obj.Registration = ConvertHelper.TypeConversation<Int64>(dictionary["Registration"]);
             //---
             if (dictionary.ContainsKey("LastAccess"))
-                obj.LastAccess = MTDataHelper.GetInt64(dictionary["LastAccess"]);
+                obj.LastAccess = ConvertHelper.TypeConversation<Int64>(dictionary["LastAccess"]);
             //---
             if (dictionary.ContainsKey("LastPassChange"))
-                obj.LastPassChange = MTDataHelper.GetInt64(dictionary["LastPassChange"]);
+                obj.LastPassChange = ConvertHelper.TypeConversation<Int64>(dictionary["LastPassChange"]);
             //---
             if (dictionary.ContainsKey("LastIP"))
-                obj.LastIP = MTDataHelper.GetString(dictionary["LastIP"]);
+                obj.LastIP = ConvertHelper.TypeConversation<string>(dictionary["LastIP"]);
             //---
             if (dictionary.ContainsKey("Name"))
-                obj.Name = MTDataHelper.GetString(dictionary["Name"]);
+                obj.Name = ConvertHelper.TypeConversation<string>(dictionary["Name"]);
             //---
             if (dictionary.ContainsKey("Company"))
-                obj.Company = MTDataHelper.GetString(dictionary["Company"]);
+                obj.Company = ConvertHelper.TypeConversation<string>(dictionary["Company"]);
             //---
             if (dictionary.ContainsKey("Account"))
-                obj.Account = MTDataHelper.GetString(dictionary["Account"]);
+                obj.Account = ConvertHelper.TypeConversation<string>(dictionary["Account"]);
             //---
             if (dictionary.ContainsKey("Country"))
-                obj.Country = MTDataHelper.GetString(dictionary["Country"]);
+                obj.Country = ConvertHelper.TypeConversation<string>(dictionary["Country"]);
             //---
             if (dictionary.ContainsKey("Language"))
-                obj.Language = MTDataHelper.GetUInt32(dictionary["Language"]);
+                obj.Language = ConvertHelper.TypeConversation<UInt32>(dictionary["Language"]);
             //---
             if (dictionary.ContainsKey("ClientID"))
-                obj.ClientID = MTDataHelper.GetUInt64(dictionary["ClientID"]);
+                obj.ClientID = ConvertHelper.TypeConversation<UInt64>(dictionary["ClientID"]);
             //---
             if (dictionary.ContainsKey("City"))
-                obj.City = MTDataHelper.GetString(dictionary["City"]);
+                obj.City = ConvertHelper.TypeConversation<string>(dictionary["City"]);
             //---
             if (dictionary.ContainsKey("State"))
-                obj.State = MTDataHelper.GetString(dictionary["State"]);
+                obj.State = ConvertHelper.TypeConversation<string>(dictionary["State"]);
             //---
             if (dictionary.ContainsKey("ZipCode"))
-                obj.ZIPCode = MTDataHelper.GetString(dictionary["ZipCode"]);
+                obj.ZIPCode = ConvertHelper.TypeConversation<string>(dictionary["ZipCode"]);
             //---
             if (dictionary.ContainsKey("Address"))
-                obj.Address = MTDataHelper.GetString(dictionary["Address"]);
+                obj.Address = ConvertHelper.TypeConversation<string>(dictionary["Address"]);
             //---
             if (dictionary.ContainsKey("Phone"))
-                obj.Phone = MTDataHelper.GetString(dictionary["Phone"]);
+                obj.Phone = ConvertHelper.TypeConversation<string>(dictionary["Phone"]);
             //---
             if (dictionary.ContainsKey("Email"))
-                obj.Email = MTDataHelper.GetString(dictionary["Email"]);
+                obj.Email = ConvertHelper.TypeConversation<string>(dictionary["Email"]);
             //---
             if (dictionary.ContainsKey("ID"))
-                obj.ID = MTDataHelper.GetString(dictionary["ID"]);
+                obj.ID = ConvertHelper.TypeConversation<string>(dictionary["ID"]);
             //---
             if (dictionary.ContainsKey("Status"))
-                obj.Status = MTDataHelper.GetString(dictionary["Status"]);
+                obj.Status = ConvertHelper.TypeConversation<string>(dictionary["Status"]);
             //---
             if (dictionary.ContainsKey("Comment"))
-                obj.Comment = MTDataHelper.GetString(dictionary["Comment"]);
+                obj.Comment = ConvertHelper.TypeConversation<string>(dictionary["Comment"]);
             //---
             if (dictionary.ContainsKey("Color"))
-                obj.Color = MTDataHelper.GetUInt32(dictionary["Color"]);
+                obj.Color = ConvertHelper.TypeConversation<UInt32>(dictionary["Color"]);
             //---
             if (dictionary.ContainsKey("PhonePassword"))
-                obj.PhonePassword = MTDataHelper.GetString(dictionary["PhonePassword"]);
+                obj.PhonePassword = ConvertHelper.TypeConversation<string>(dictionary["PhonePassword"]);
             //---
             if (dictionary.ContainsKey("Leverage"))
-                obj.Leverage = MTDataHelper.GetUInt32(dictionary["Leverage"]);
+                obj.Leverage = ConvertHelper.TypeConversation<UInt32>(dictionary["Leverage"]);
             //---
             if (dictionary.ContainsKey("Agent"))
-                obj.Agent = MTDataHelper.GetUInt64(dictionary["Agent"]);
+                obj.Agent = ConvertHelper.TypeConversation<UInt64>(dictionary["Agent"]);
             //---
             if (dictionary.ContainsKey("Balance"))
-                obj.Balance = MTDataHelper.GetDouble(dictionary["Balance"]);
+                obj.Balance = ConvertHelper.TypeConversation<double>(dictionary["Balance"]);
             //---
             if (dictionary.ContainsKey("Credit"))
-                obj.Credit = MTDataHelper.GetDouble(dictionary["Credit"]);
+                obj.Credit = ConvertHelper.TypeConversation<double>(dictionary["Credit"]);
             //---
             if (dictionary.ContainsKey("InterestRate"))
-                obj.InterestRate = MTDataHelper.GetDouble(dictionary["InterestRate"]);
+                obj.InterestRate = ConvertHelper.TypeConversation<double>(dictionary["InterestRate"]);
             //---
             if (dictionary.ContainsKey("CommissionDaily"))
-                obj.CommissionDaily = MTDataHelper.GetDouble(dictionary["CommissionDaily"]);
+                obj.CommissionDaily = ConvertHelper.TypeConversation<double>(dictionary["CommissionDaily"]);
             //---
             if (dictionary.ContainsKey("CommissionMonthly"))
-                obj.CommissionMonthly = MTDataHelper.GetDouble(dictionary["CommissionMonthly"]);
+                obj.CommissionMonthly = ConvertHelper.TypeConversation<double>(dictionary["CommissionMonthly"]);
             //---
             if (dictionary.ContainsKey("CommissionAgentDaily"))
-                obj.CommissionAgentDaily = MTDataHelper.GetDouble(dictionary["CommissionAgentDaily"]);
+                obj.CommissionAgentDaily = ConvertHelper.TypeConversation<double>(dictionary["CommissionAgentDaily"]);
             //---
             if (dictionary.ContainsKey("CommissionAgentMonthly"))
-                obj.CommissionAgentMonthly = MTDataHelper.GetDouble(dictionary["CommissionAgentMonthly"]);
+                obj.CommissionAgentMonthly = ConvertHelper.TypeConversation<double>(dictionary["CommissionAgentMonthly"]);
             //---
             if (dictionary.ContainsKey("BalancePrevDay"))
-                obj.BalancePrevDay = MTDataHelper.GetDouble(dictionary["BalancePrevDay"]);
+                obj.BalancePrevDay = ConvertHelper.TypeConversation<double>(dictionary["BalancePrevDay"]);
             //---
             if (dictionary.ContainsKey("BalancePrevMonth"))
-                obj.BalancePrevMonth = MTDataHelper.GetDouble(dictionary["BalancePrevMonth"]);
+                obj.BalancePrevMonth = ConvertHelper.TypeConversation<double>(dictionary["BalancePrevMonth"]);
             //---
             if (dictionary.ContainsKey("EquityPrevDay"))
-                obj.EquityPrevDay = MTDataHelper.GetDouble(dictionary["EquityPrevDay"]);
+                obj.EquityPrevDay = ConvertHelper.TypeConversation<double>(dictionary["EquityPrevDay"]);
             //---
             if (dictionary.ContainsKey("EquityPrevMonth"))
-                obj.EquityPrevMonth = MTDataHelper.GetDouble(dictionary["EquityPrevMonth"]);
+                obj.EquityPrevMonth = ConvertHelper.TypeConversation<double>(dictionary["EquityPrevMonth"]);
             //---
             if (dictionary.ContainsKey("TradeAccounts"))
-                obj.TradeAccounts = MTDataHelper.GetString(dictionary["TradeAccounts"]);
+                obj.TradeAccounts = ConvertHelper.TypeConversation<string>(dictionary["TradeAccounts"]);
             //---
             if (dictionary.ContainsKey("LeadCampaign"))
-                obj.LeadCampaign = MTDataHelper.GetString(dictionary["LeadCampaign"]);
+                obj.LeadCampaign = ConvertHelper.TypeConversation<string>(dictionary["LeadCampaign"]);
             //---
             if (dictionary.ContainsKey("LeadSource"))
-                obj.LeadSource = MTDataHelper.GetString(dictionary["LeadSource"]);
+                obj.LeadSource = ConvertHelper.TypeConversation<string>(dictionary["LeadSource"]);
             //---
             return obj;
         }
@@ -752,76 +753,76 @@ namespace MetaQuotes.MT5WebAPI.Common.Protocol
             MTAccount obj = new();
             //---
             if (dictionary.ContainsKey("Login"))
-                obj.Login = MTDataHelper.GetUInt64(dictionary["Login"]);
+                obj.Login = ConvertHelper.TypeConversation<UInt64>(dictionary["Login"]);
             //---
             if (dictionary.ContainsKey("CurrencyDigits"))
-                obj.CurrencyDigits = MTDataHelper.GetUInt32(dictionary["CurrencyDigits"]);
+                obj.CurrencyDigits = ConvertHelper.TypeConversation<UInt32>(dictionary["CurrencyDigits"]);
             //---
             if (dictionary.ContainsKey("Balance"))
-                obj.Balance = MTDataHelper.GetDouble(dictionary["Balance"]);
+                obj.Balance = ConvertHelper.TypeConversation<double>(dictionary["Balance"]);
             //---
             if (dictionary.ContainsKey("Credit"))
-                obj.Credit = MTDataHelper.GetDouble(dictionary["Credit"]);
+                obj.Credit = ConvertHelper.TypeConversation<double>(dictionary["Credit"]);
             //---
             if (dictionary.ContainsKey("Margin"))
-                obj.Margin = MTDataHelper.GetDouble(dictionary["Margin"]);
+                obj.Margin = ConvertHelper.TypeConversation<double>(dictionary["Margin"]);
             //---
             if (dictionary.ContainsKey("MarginFree"))
-                obj.MarginFree = MTDataHelper.GetDouble(dictionary["MarginFree"]);
+                obj.MarginFree = ConvertHelper.TypeConversation<double>(dictionary["MarginFree"]);
             //---
             if (dictionary.ContainsKey("MarginLevel"))
-                obj.MarginLevel = MTDataHelper.GetDouble(dictionary["MarginLevel"]);
+                obj.MarginLevel = ConvertHelper.TypeConversation<double>(dictionary["MarginLevel"]);
             //---
             if (dictionary.ContainsKey("MarginLeverage"))
-                obj.MarginLeverage = MTDataHelper.GetUInt32(dictionary["MarginLeverage"]);
+                obj.MarginLeverage = ConvertHelper.TypeConversation<UInt32>(dictionary["MarginLeverage"]);
             //---
             if (dictionary.ContainsKey("Profit"))
-                obj.Profit = MTDataHelper.GetDouble(dictionary["Profit"]);
+                obj.Profit = ConvertHelper.TypeConversation<double>(dictionary["Profit"]);
             //---
             if (dictionary.ContainsKey("Storage"))
-                obj.Storage = MTDataHelper.GetDouble(dictionary["Storage"]);
+                obj.Storage = ConvertHelper.TypeConversation<double>(dictionary["Storage"]);
             //---
             if (dictionary.ContainsKey("Commission"))
-                obj.Commission = MTDataHelper.GetDouble(dictionary["Commission"]);
+                obj.Commission = ConvertHelper.TypeConversation<double>(dictionary["Commission"]);
             //---
             if (dictionary.ContainsKey("Floating"))
-                obj.Floating = MTDataHelper.GetDouble(dictionary["Floating"]);
+                obj.Floating = ConvertHelper.TypeConversation<double>(dictionary["Floating"]);
             //---
             if (dictionary.ContainsKey("Equity"))
-                obj.Equity = MTDataHelper.GetDouble(dictionary["Equity"]);
+                obj.Equity = ConvertHelper.TypeConversation<double>(dictionary["Equity"]);
             //---
             if (dictionary.ContainsKey("SOActivation"))
-                obj.SOActivation = (MTAccount.EnSoActivation)MTDataHelper.GetUInt32(dictionary["SOActivation"]);
+                obj.SOActivation = (MTAccount.EnSoActivation)ConvertHelper.TypeConversation<UInt32>(dictionary["SOActivation"]);
             //---
             if (dictionary.ContainsKey("SOTime"))
-                obj.SOTime = MTDataHelper.GetInt64(dictionary["SOTime"]);
+                obj.SOTime = ConvertHelper.TypeConversation<Int64>(dictionary["SOTime"]);
             //---
             if (dictionary.ContainsKey("SOLevel"))
-                obj.SOLevel = MTDataHelper.GetDouble(dictionary["SOLevel"]);
+                obj.SOLevel = ConvertHelper.TypeConversation<double>(dictionary["SOLevel"]);
             //---
             if (dictionary.ContainsKey("SOEquity"))
-                obj.SOEquity = MTDataHelper.GetDouble(dictionary["SOEquity"]);
+                obj.SOEquity = ConvertHelper.TypeConversation<double>(dictionary["SOEquity"]);
             //---
             if (dictionary.ContainsKey("SOMargin"))
-                obj.SOMargin = MTDataHelper.GetDouble(dictionary["SOMargin"]);
+                obj.SOMargin = ConvertHelper.TypeConversation<double>(dictionary["SOMargin"]);
             //---
             if (dictionary.ContainsKey("Assets"))
-                obj.Assets = MTDataHelper.GetDouble(dictionary["Assets"]);
+                obj.Assets = ConvertHelper.TypeConversation<double>(dictionary["Assets"]);
             //---
             if (dictionary.ContainsKey("Liabilities"))
-                obj.Liabilities = MTDataHelper.GetDouble(dictionary["Liabilities"]);
+                obj.Liabilities = ConvertHelper.TypeConversation<double>(dictionary["Liabilities"]);
             //---
             if (dictionary.ContainsKey("BlockedCommission"))
-                obj.BlockedCommission = MTDataHelper.GetDouble(dictionary["BlockedCommission"]);
+                obj.BlockedCommission = ConvertHelper.TypeConversation<double>(dictionary["BlockedCommission"]);
             //---
             if (dictionary.ContainsKey("BlockedProfit"))
-                obj.BlockedProfit = MTDataHelper.GetDouble(dictionary["BlockedProfit"]);
+                obj.BlockedProfit = ConvertHelper.TypeConversation<double>(dictionary["BlockedProfit"]);
             //---
             if (dictionary.ContainsKey("MarginInitial"))
-                obj.MarginInitial = MTDataHelper.GetDouble(dictionary["MarginInitial"]);
+                obj.MarginInitial = ConvertHelper.TypeConversation<double>(dictionary["MarginInitial"]);
             //---
             if (dictionary.ContainsKey("MarginMaintenance"))
-                obj.MarginMaintenance = MTDataHelper.GetDouble(dictionary["MarginMaintenance"]);
+                obj.MarginMaintenance = ConvertHelper.TypeConversation<double>(dictionary["MarginMaintenance"]);
             //---
             return obj;
         }

@@ -4,6 +4,7 @@
 //|                                               www.metaquotes.net |
 //+------------------------------------------------------------------+
 using MetaQuotes.MT5WebAPI.Common.Utils;
+using MT5WebAPI.Common.Utils;
 using System.Collections;
 using System.Text;
 using System.Text.Json;
@@ -317,121 +318,121 @@ namespace MetaQuotes.MT5WebAPI.Common.Protocol
             MTConGroup obj = new();
             //---
             if (dictionary.ContainsKey("Group"))
-                obj.Group = MTDataHelper.GetString(dictionary["Group"]);
+                obj.Group = ConvertHelper.TypeConversation<string>(dictionary["Group"]);
             //--- 
             if (dictionary.ContainsKey("Server"))
-                obj.Server = MTDataHelper.GetUInt64(dictionary["Server"]);
+                obj.Server = ConvertHelper.TypeConversation<UInt64>(dictionary["Server"]);
             //---
             if (dictionary.ContainsKey("PermissionsFlags"))
-                obj.PermissionsFlags = (MTConGroup.EnPermissionsFlags)MTDataHelper.GetUInt64(dictionary["PermissionsFlags"]);
+                obj.PermissionsFlags = (MTConGroup.EnPermissionsFlags)ConvertHelper.TypeConversation<ulong>(dictionary["PermissionsFlags"]);
             //---
             if (dictionary.ContainsKey("AuthMode"))
-                obj.AuthMode = (MTConGroup.EnAuthMode)MTDataHelper.GetUInt32(dictionary["AuthMode"]);
+                obj.AuthMode = (MTConGroup.EnAuthMode)ConvertHelper.TypeConversation<UInt32>(dictionary["AuthMode"]);
             //---
             if (dictionary.ContainsKey("AuthPasswordMin"))
-                obj.AuthPasswordMin = MTDataHelper.GetUInt32(dictionary["AuthPasswordMin"]);
+                obj.AuthPasswordMin = ConvertHelper.TypeConversation<UInt32>(dictionary["AuthPasswordMin"]);
             //---
             if (dictionary.ContainsKey("AuthOTPMode"))
-                obj.AuthOTPMode = (MTConGroup.EnAuthOTPMode)MTDataHelper.GetUInt32(dictionary["AuthOTPMode"]);
+                obj.AuthOTPMode = (MTConGroup.EnAuthOTPMode)ConvertHelper.TypeConversation<UInt32>(dictionary["AuthOTPMode"]);
             //---
             if (dictionary.ContainsKey("Company"))
-                obj.Company = MTDataHelper.GetString(dictionary["Company"]);
+                obj.Company = ConvertHelper.TypeConversation<string>(dictionary["Company"]);
             //---
             if (dictionary.ContainsKey("CompanyPage"))
-                obj.CompanyPage = MTDataHelper.GetString(dictionary["CompanyPage"]);
+                obj.CompanyPage = ConvertHelper.TypeConversation<string>(dictionary["CompanyPage"]);
             //---
             if (dictionary.ContainsKey("CompanyEmail"))
-                obj.CompanyEmail = MTDataHelper.GetString(dictionary["CompanyEmail"]);
+                obj.CompanyEmail = ConvertHelper.TypeConversation<string>(dictionary["CompanyEmail"]);
             //---
             if (dictionary.ContainsKey("CompanySupportPage"))
-                obj.CompanySupportPage = MTDataHelper.GetString(dictionary["CompanySupportPage"]);
+                obj.CompanySupportPage = ConvertHelper.TypeConversation<string>(dictionary["CompanySupportPage"]);
             //---
             if (dictionary.ContainsKey("CompanySupportEmail"))
-                obj.CompanySupportEmail = MTDataHelper.GetString(dictionary["CompanySupportEmail"]);
+                obj.CompanySupportEmail = ConvertHelper.TypeConversation<string>(dictionary["CompanySupportEmail"]);
             //---
             if (dictionary.ContainsKey("CompanyCatalog"))
-                obj.CompanyCatalog = MTDataHelper.GetString(dictionary["CompanyCatalog"]);
+                obj.CompanyCatalog = ConvertHelper.TypeConversation<string>(dictionary["CompanyCatalog"]);
             //---
             if (dictionary.ContainsKey("Currency"))
-                obj.Currency = MTDataHelper.GetString(dictionary["Currency"]);
+                obj.Currency = ConvertHelper.TypeConversation<string>(dictionary["Currency"]);
             //---
             if (dictionary.ContainsKey("CurrencyDigits"))
-                obj.CurrencyDigits = MTDataHelper.GetUInt32(dictionary["CurrencyDigits"]);
+                obj.CurrencyDigits = ConvertHelper.TypeConversation<UInt32>(dictionary["CurrencyDigits"]);
             //---
             if (dictionary.ContainsKey("ReportsMode"))
-                obj.ReportsMode = (MTConGroup.EnReportsMode)MTDataHelper.GetUInt32(dictionary["ReportsMode"]);
+                obj.ReportsMode = (MTConGroup.EnReportsMode)ConvertHelper.TypeConversation<UInt32>(dictionary["ReportsMode"]);
             //---
             if (dictionary.ContainsKey("ReportsFlags"))
-                obj.ReportsFlags = (MTConGroup.EnReportsFlags)MTDataHelper.GetUInt64(dictionary["ReportsFlags"]);
+                obj.ReportsFlags = (MTConGroup.EnReportsFlags)ConvertHelper.TypeConversation<UInt64>(dictionary["ReportsFlags"]);
             //---
             if (dictionary.ContainsKey("ReportsSMTP"))
-                obj.ReportsSMTP = MTDataHelper.GetString(dictionary["ReportsSMTP"]);
+                obj.ReportsSMTP = ConvertHelper.TypeConversation<string>(dictionary["ReportsSMTP"]);
             //---
             if (dictionary.ContainsKey("ReportsSMTPLogin"))
-                obj.ReportsSMTPLogin = MTDataHelper.GetString(dictionary["ReportsSMTPLogin"]);
+                obj.ReportsSMTPLogin = ConvertHelper.TypeConversation<string>(dictionary["ReportsSMTPLogin"]);
             //---
             if (dictionary.ContainsKey("ReportsSMTPPass"))
-                obj.ReportsSMTPPass = MTDataHelper.GetString(dictionary["ReportsSMTPPass"]);
+                obj.ReportsSMTPPass = ConvertHelper.TypeConversation<string>(dictionary["ReportsSMTPPass"]);
             //---
             if (dictionary.ContainsKey("NewsMode"))
-                obj.NewsMode = (MTConGroup.EnNewsMode)MTDataHelper.GetUInt32(dictionary["NewsMode"]);
+                obj.NewsMode = (MTConGroup.EnNewsMode)ConvertHelper.TypeConversation<UInt32>(dictionary["NewsMode"]);
             //---
             if (dictionary.ContainsKey("NewsCategory"))
-                obj.NewsCategory = MTDataHelper.GetString(dictionary["NewsCategory"]);
+                obj.NewsCategory = ConvertHelper.TypeConversation<string>(dictionary["NewsCategory"]);
             //---
             if (dictionary.ContainsKey("NewsLangs"))
                 obj.NewsLangs = ParsingNewsLang(dictionary["NewsLangs"] as ArrayList);
             //---
             if (dictionary.ContainsKey("MailMode"))
-                obj.MailMode = (MTConGroup.EnMailMode)MTDataHelper.GetUInt32(dictionary["MailMode"]);
+                obj.MailMode = (MTConGroup.EnMailMode)ConvertHelper.TypeConversation<UInt32>(dictionary["MailMode"]);
             //---
             if (dictionary.ContainsKey("TradeFlags"))
-                obj.TradeFlags = (EnTradeFlags)MTDataHelper.GetUInt64(dictionary["TradeFlags"]);
+                obj.TradeFlags = (EnTradeFlags)ConvertHelper.TypeConversation<UInt64>(dictionary["TradeFlags"]);
             //---
             if (dictionary.ContainsKey("TradeTransferMode"))
-                obj.TradeTransferMode = (MTConGroup.EnTransferMode)MTDataHelper.GetUInt32(dictionary["TradeTransferMode"]);
+                obj.TradeTransferMode = (MTConGroup.EnTransferMode)ConvertHelper.TypeConversation<UInt32>(dictionary["TradeTransferMode"]);
             //---
             if (dictionary.ContainsKey("TradeInterestrate"))
-                obj.TradeInterestrate = MTDataHelper.GetDouble(dictionary["TradeInterestrate"]);
+                obj.TradeInterestrate = ConvertHelper.TypeConversation<double>(dictionary["TradeInterestrate"]);
             //---
             if (dictionary.ContainsKey("TradeVirtualCredit"))
-                obj.TradeVirtualCredit = MTDataHelper.GetDouble(dictionary["TradeVirtualCredit"]);
+                obj.TradeVirtualCredit = ConvertHelper.TypeConversation<double>(dictionary["TradeVirtualCredit"]);
             //---
             if (dictionary.ContainsKey("MarginMode"))
-                obj.MarginMode = (MTConGroup.EnMarginMode)MTDataHelper.GetUInt32(dictionary["MarginMode"]);
+                obj.MarginMode = (MTConGroup.EnMarginMode)ConvertHelper.TypeConversation<UInt32>(dictionary["MarginMode"]);
             //---
             if (dictionary.ContainsKey("MarginSOMode"))
-                obj.MarginSOMode = (MTConGroup.EnStopOutMode)MTDataHelper.GetUInt32(dictionary["MarginSOMode"]);
+                obj.MarginSOMode = (MTConGroup.EnStopOutMode)ConvertHelper.TypeConversation<UInt32>(dictionary["MarginSOMode"]);
             //---
             if (dictionary.ContainsKey("MarginFreeMode"))
-                obj.MarginFreeMode = (MTConGroup.EnFreeMarginMode)MTDataHelper.GetUInt32(dictionary["MarginFreeMode"]);
+                obj.MarginFreeMode = (MTConGroup.EnFreeMarginMode)ConvertHelper.TypeConversation<UInt32>(dictionary["MarginFreeMode"]);
             //---
             if (dictionary.ContainsKey("MarginCall"))
-                obj.MarginCall = MTDataHelper.GetDouble(dictionary["MarginCall"]);
+                obj.MarginCall = ConvertHelper.TypeConversation<double>(dictionary["MarginCall"]);
             //---
             if (dictionary.ContainsKey("MarginStopOut"))
-                obj.MarginStopOut = MTDataHelper.GetDouble(dictionary["MarginStopOut"]);
+                obj.MarginStopOut = ConvertHelper.TypeConversation<double>(dictionary["MarginStopOut"]);
             //---
             if (dictionary.ContainsKey("MarginFreeProfitMode"))
-                obj.MarginFreeProfitMode = (MTConGroup.EnMarginFreeProfitMode)MTDataHelper.GetUInt32(dictionary["MarginFreeProfitMode"]);
+                obj.MarginFreeProfitMode = (MTConGroup.EnMarginFreeProfitMode)ConvertHelper.TypeConversation<UInt32>(dictionary["MarginFreeProfitMode"]);
             //---
             if (dictionary.ContainsKey("DemoLeverage"))
-                obj.DemoLeverage = MTDataHelper.GetUInt32(dictionary["DemoLeverage"]);
+                obj.DemoLeverage = ConvertHelper.TypeConversation<UInt32>(dictionary["DemoLeverage"]);
             //---
             if (dictionary.ContainsKey("DemoDeposit"))
-                obj.DemoDeposit = MTDataHelper.GetDouble(dictionary["DemoDeposit"]);
+                obj.DemoDeposit = ConvertHelper.TypeConversation<double>(dictionary["DemoDeposit"]);
             //---
             if (dictionary.ContainsKey("LimitHistory"))
-                obj.LimitHistory = (MTConGroup.EnHistoryLimit)MTDataHelper.GetUInt32(dictionary["LimitHistory"]);
+                obj.LimitHistory = (MTConGroup.EnHistoryLimit)ConvertHelper.TypeConversation<UInt32>(dictionary["LimitHistory"]);
             //---
             if (dictionary.ContainsKey("LimitOrders"))
-                obj.LimitOrders = MTDataHelper.GetUInt32(dictionary["LimitOrders"]);
+                obj.LimitOrders = ConvertHelper.TypeConversation<UInt32>(dictionary["LimitOrders"]);
             //---
             if (dictionary.ContainsKey("LimitSymbols"))
-                obj.LimitSymbols = MTDataHelper.GetUInt32(dictionary["LimitSymbols"]);
+                obj.LimitSymbols = ConvertHelper.TypeConversation<UInt32>(dictionary["LimitSymbols"]);
             //---
             if (dictionary.ContainsKey("LimitPositions"))
-                obj.LimitPositions = MTDataHelper.GetUInt32(dictionary["LimitPositions"]);
+                obj.LimitPositions = ConvertHelper.TypeConversation<UInt32>(dictionary["LimitPositions"]);
             //---
             if (dictionary.ContainsKey("Commissions"))
                 obj.Commissions = ParsingCommissions(dictionary["Commissions"] as ArrayList);
@@ -475,7 +476,7 @@ namespace MetaQuotes.MT5WebAPI.Common.Protocol
             List<uint> result = new();
             foreach (string lang in languages)
             {
-                result.Add(MTDataHelper.GetUInt32(lang));
+                result.Add(ConvertHelper.TypeConversation<UInt32>(lang));
             }
             return result;
         }
@@ -523,28 +524,28 @@ namespace MetaQuotes.MT5WebAPI.Common.Protocol
             MTConCommission obj = new();
             //---
             if (dictionary.ContainsKey("Name"))
-                obj.Name = MTDataHelper.GetString(dictionary["Name"]);
+                obj.Name = ConvertHelper.TypeConversation<string>(dictionary["Name"]);
             //---
             if (dictionary.ContainsKey("Description"))
-                obj.Description = MTDataHelper.GetString(dictionary["Description"]);
+                obj.Description = ConvertHelper.TypeConversation<string>(dictionary["Description"]);
             //---
             if (dictionary.ContainsKey("Path"))
-                obj.Path = MTDataHelper.GetString(dictionary["Path"]);
+                obj.Path = ConvertHelper.TypeConversation<string>(dictionary["Path"]);
             //---
             if (dictionary.ContainsKey("Mode"))
-                obj.Mode = (MTConCommission.EnCommMode)MTDataHelper.GetUInt32(dictionary["Mode"]);
+                obj.Mode = (MTConCommission.EnCommMode)ConvertHelper.TypeConversation<UInt32>(dictionary["Mode"]);
             //---
             if (dictionary.ContainsKey("RangeMode"))
-                obj.RangeMode = (MTConCommission.EnCommRangeMode)MTDataHelper.GetUInt32(dictionary["RangeMode"]);
+                obj.RangeMode = (MTConCommission.EnCommRangeMode)ConvertHelper.TypeConversation<UInt32>(dictionary["RangeMode"]);
             //---
             if (dictionary.ContainsKey("ChargeMode"))
-                obj.ChargeMode = (MTConCommission.EnCommChargeMode)MTDataHelper.GetUInt32(dictionary["ChargeMode"]);
+                obj.ChargeMode = (MTConCommission.EnCommChargeMode)ConvertHelper.TypeConversation<UInt32>(dictionary["ChargeMode"]);
             //---
             if (dictionary.ContainsKey("TurnoverCurrency"))
-                obj.TurnoverCurrency = MTDataHelper.GetString(dictionary["TurnoverCurrency"]);
+                obj.TurnoverCurrency = ConvertHelper.TypeConversation<string>(dictionary["TurnoverCurrency"]);
             //---
             if (dictionary.ContainsKey("EntryMode"))
-                obj.EntryMode = (MTConCommission.EnCommEntryMode)MTDataHelper.GetUInt32(dictionary["EntryMode"]);
+                obj.EntryMode = (MTConCommission.EnCommEntryMode)ConvertHelper.TypeConversation<UInt32>(dictionary["EntryMode"]);
             //---
             if (dictionary.ContainsKey("Tiers"))
                 obj.Tiers = ParsingTiers(dictionary["Tiers"] as ArrayList);
@@ -574,28 +575,28 @@ namespace MetaQuotes.MT5WebAPI.Common.Protocol
             MTConCommTier obj = new();
             //---
             if (dictionary.ContainsKey("Mode"))
-                obj.Mode = (MTConCommTier.EnCommissionMode)MTDataHelper.GetUInt32(dictionary["Mode"]);
+                obj.Mode = (MTConCommTier.EnCommissionMode)ConvertHelper.TypeConversation<UInt32>(dictionary["Mode"]);
             //---
             if (dictionary.ContainsKey("Type"))
-                obj.Type = (MTConCommTier.EnCommissionVolumeType)MTDataHelper.GetUInt32(dictionary["Type"]);
+                obj.Type = (MTConCommTier.EnCommissionVolumeType)ConvertHelper.TypeConversation<UInt32>(dictionary["Type"]);
             //---
             if (dictionary.ContainsKey("Value"))
-                obj.Value = MTDataHelper.GetDouble(dictionary["Value"]);
+                obj.Value = ConvertHelper.TypeConversation<double>(dictionary["Value"]);
             //---
             if (dictionary.ContainsKey("Minimal"))
-                obj.Minimal = MTDataHelper.GetDouble(dictionary["Minimal"]);
+                obj.Minimal = ConvertHelper.TypeConversation<double>(dictionary["Minimal"]);
             //---
             if (dictionary.ContainsKey("RangeFrom"))
-                obj.RangeFrom = MTDataHelper.GetDouble(dictionary["RangeFrom"]);
+                obj.RangeFrom = ConvertHelper.TypeConversation<double>(dictionary["RangeFrom"]);
             //---
             if (dictionary.ContainsKey("RangeTo"))
-                obj.RangeTo = MTDataHelper.GetDouble(dictionary["RangeTo"]);
+                obj.RangeTo = ConvertHelper.TypeConversation<double>(dictionary["RangeTo"]);
             //---
             if (dictionary.ContainsKey("Currency"))
-                obj.Currency = MTDataHelper.GetString(dictionary["Currency"]);
+                obj.Currency = ConvertHelper.TypeConversation<string>(dictionary["Currency"]);
             //---
             if (dictionary.ContainsKey("Maximal"))
-                obj.Maximal = MTDataHelper.GetDouble(dictionary["Maximal"]);
+                obj.Maximal = ConvertHelper.TypeConversation<double>(dictionary["Maximal"]);
             //---
             return obj;
         }

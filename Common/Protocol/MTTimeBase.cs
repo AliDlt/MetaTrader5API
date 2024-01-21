@@ -4,6 +4,7 @@
 //|                                               www.metaquotes.net |
 //+------------------------------------------------------------------+
 using MetaQuotes.MT5WebAPI.Common.Utils;
+using MT5WebAPI.Common.Utils;
 using System.Collections;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -242,16 +243,16 @@ namespace MetaQuotes.MT5WebAPI.Common.Protocol
             MTConTime obj = new();
 
             if (dictionary.ContainsKey("Daylight"))
-                obj.Daylight = MTDataHelper.GetInt32(dictionary["Daylight"]);
+                obj.Daylight = ConvertHelper.TypeConversation<Int32>(dictionary["Daylight"]);
 
             if (dictionary.ContainsKey("DaylightState"))
-                obj.DaylightState = MTDataHelper.GetInt32(dictionary["DaylightState"]);
+                obj.DaylightState = ConvertHelper.TypeConversation<Int32>(dictionary["DaylightState"]);
 
             if (dictionary.ContainsKey("TimeZone"))
-                obj.TimeZone = MTDataHelper.GetInt32(dictionary["TimeZone"]);
+                obj.TimeZone = ConvertHelper.TypeConversation<Int32>(dictionary["TimeZone"]);
 
             if (dictionary.ContainsKey("TimeServer"))
-                obj.TimeServer = MTDataHelper.GetString(dictionary["TimeServer"]);
+                obj.TimeServer = ConvertHelper.TypeConversation<string>(dictionary["TimeServer"]);
 
             if (dictionary.ContainsKey("Days"))
                 obj.Days = ParsingDays(dictionary["Days"] as ArrayList);
@@ -279,7 +280,7 @@ namespace MetaQuotes.MT5WebAPI.Common.Protocol
                     int j = 0;
                     foreach (string value in values)
                     {
-                        result[i][j] = (MTConTime.EnTimeTableMode)MTDataHelper.GetInt32(value);
+                        result[i][j] = (MTConTime.EnTimeTableMode)ConvertHelper.TypeConversation<Int32>(value);
                         j++;
                     }
                     //---
