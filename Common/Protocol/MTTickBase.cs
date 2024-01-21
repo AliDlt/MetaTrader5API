@@ -239,7 +239,7 @@ namespace MetaQuotes.MT5WebAPI.Common.Protocol
     /// <summary>
     /// class parsin from json to List MTTick
     /// </summary>
-    class MTTickConverter : JsonConverter<MTTick>
+    class MTTickConverter : CustomJsonConverter<MTTick>
     {
         private static MTTick ParseTick(IDictionary<string, object> dictionary)
         {
@@ -282,24 +282,6 @@ namespace MetaQuotes.MT5WebAPI.Common.Protocol
             return obj;
         }
 
-        public override MTTick? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-        {
-
-            if (reader.TokenType != JsonTokenType.StartObject)
-                throw new JsonException("Expected start of object");
-
-            var dictionary = JsonSerializer.Deserialize<Dictionary<string, object>>(ref reader, options);
-
-            if (dictionary == null)
-                return null;
-
-            return ParseTick(dictionary);
-        }
-
-        public override void Write(Utf8JsonWriter writer, MTTick value, JsonSerializerOptions options)
-        {
-            JsonSerializer.Serialize(writer, value, options);
-        }
     }
     /// <summary>
     /// get tick info
