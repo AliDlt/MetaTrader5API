@@ -123,13 +123,11 @@ namespace MT5WebAPI.Common.Utils
                     return (T)(object)(DateTime?)Convert.ToDateTime(obj);
                 }
 
-                // Add more type conversions as needed
-
                 throw new InvalidOperationException($"Unsupported type: {targetType.Name}");
             }
             catch (Exception exc)
             {
-                Console.Write(exc.ToString());
+                Console.Write(exc.Message.ToString());
                 throw;
             }
         }
