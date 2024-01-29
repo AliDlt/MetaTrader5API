@@ -7,7 +7,6 @@ using MetaQuotes.MT5WebAPI.Common.Utils;
 using MT5WebAPI.Common.Utils;
 using System.Globalization;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 //---
 namespace MetaQuotes.MT5WebAPI.Common.Protocol
 {
@@ -536,9 +535,9 @@ namespace MetaQuotes.MT5WebAPI.Common.Protocol
     /// <summary>
     /// class parsin from json to List MTUser
     /// </summary>
-    class MT5UserConverter : JsonConverter<MTUser>
+    class MT5UserConverter : CustomJsonConverter<MTUser>
     {
-        private static MTUser ParseUser(IDictionary<string, object> dictionary)
+        protected override MTUser Parse(Dictionary<string, JsonElement> dictionary)
         {
             if (dictionary == null) return null;
             //---
@@ -672,28 +671,6 @@ namespace MetaQuotes.MT5WebAPI.Common.Protocol
             //---
             return obj;
         }
-
-        public override MTUser Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-        {
-            if (reader.TokenType != JsonTokenType.StartObject)
-                throw new JsonException("Expected start of object");
-
-            var dictionary = JsonSerializer.Deserialize<Dictionary<string, object>>(ref reader, options);
-
-            if (dictionary == null)
-                return null;
-
-            return ParseUser(dictionary);
-        }
-
-        public override void Write(Utf8JsonWriter writer, MTUser value, JsonSerializerOptions options)
-        {
-            // Implementation for serialization (if needed)
-            // You can decide how MTUser should be serialized to JSON.
-            // Typically, you would serialize each property individually or use JsonSerializer.Serialize.
-            // Example:
-            JsonSerializer.Serialize(writer, value, options);
-        }
     }
     /// <summary>
     /// get account info
@@ -727,26 +704,9 @@ namespace MetaQuotes.MT5WebAPI.Common.Protocol
     /// <summary>
     /// class parse from json to List MTAccount
     /// </summary>
-    class MTAccountConverter : JsonConverter<MTAccount>
+    class MTAccountConverter : CustomJsonConverter<MTAccount>
     {
-        public override MTAccount Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-        {
-            if (reader.TokenType != JsonTokenType.StartObject)
-                throw new JsonException("Expected start of object");
-
-            var dictionary = JsonSerializer.Deserialize<Dictionary<string, object>>(ref reader, options);
-
-            if (dictionary == null)
-                return null;
-
-            return ParseUser(dictionary);
-        }
-
-        public override void Write(Utf8JsonWriter writer, MTAccount value, JsonSerializerOptions options)
-        {
-            JsonSerializer.Serialize(writer, value, options);
-        }
-        private static MTAccount ParseUser(IDictionary<string, object> dictionary)
+        protected override MTAccount Parse(Dictionary<string, JsonElement> dictionary)
         {
             if (dictionary == null) return null;
             //---
@@ -858,24 +818,11 @@ namespace MetaQuotes.MT5WebAPI.Common.Protocol
     /// <summary>
     /// class parsing from json to List MTUser
     /// </summary>
-    class MTLoginsConverter : JsonConverter<ulong>
+    class MTLoginsConverter : CustomJsonConverter<ulong>
     {
-        public override ulong Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        protected override ulong Parse(Dictionary<string, JsonElement> dictionary)
         {
-            var tokType = reader.TokenType;
-            if (tokType == JsonTokenType.String)
-            {
-                var tokStr = reader.GetString();
-                if ( ulong.TryParse(tokStr, out ulong value))
-                    return value;
-            }
-
-            throw new JsonException("Invalid JSON format for ulong.");
-        }
-
-        public override void Write(Utf8JsonWriter writer, ulong value, JsonSerializerOptions options)
-        {
-            writer.WriteNumberValue(value);
+            throw new NotImplementedException();
         }
     }
     /// <summary>

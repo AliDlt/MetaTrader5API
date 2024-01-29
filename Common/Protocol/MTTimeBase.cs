@@ -5,9 +5,7 @@
 //+------------------------------------------------------------------+
 using MetaQuotes.MT5WebAPI.Common.Utils;
 using MT5WebAPI.Common.Utils;
-using System.Collections;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 //---
 namespace MetaQuotes.MT5WebAPI.Common.Protocol
 {
@@ -226,17 +224,52 @@ namespace MetaQuotes.MT5WebAPI.Common.Protocol
     /// <summary>
     /// class parsin from json to MTConTime
     /// </summary>
-    internal class MTConTimeConverter : JsonConverter<MTConTime>
+    internal class MTConTimeConverter : CustomJsonConverter<MTConTime>
     {
 
-        /// <summary>
-        /// Deserialize from MT server json
-        /// </summary>
-        /// <param name="dictionary">data from json</param>
-        /// <param name="type"></param>
-        /// <param name="serializer"></param>
+        private static MTConTime.EnTimeTableMode[][] ParsingDays(JsonElement daysElement)
+        {
+            if (daysElement.ValueKind != JsonValueKind.Array)
+                return null;
 
-        public static MTConTime ParseConTime(IDictionary<string, object> dictionary)
+            try
+            {
+                // Get array of days
+                MTConTime.EnTimeTableMode[][] result = new MTConTime.EnTimeTableMode[daysElement.GetArrayLength()][];
+                int i = 0;
+
+                foreach (JsonElement valuesElement in daysElement.EnumerateArray())
+                {
+                    if (valuesElement.ValueKind != JsonValueKind.Array)
+                        continue;
+
+                    // Get values for each day
+                    List<MTConTime.EnTimeTableMode> valuesList = new();
+
+                    foreach (JsonElement valueElement in valuesElement.EnumerateArray())
+                    {
+                        if (valueElement.ValueKind == JsonValueKind.Number)
+                        {
+                            valuesList.Add((MTConTime.EnTimeTableMode)valueElement.GetInt32());
+                        }
+                    }
+
+                    // Assign the values to the result array
+                    result[i] = valuesList.ToArray();
+                    i++;
+                }
+
+                return result;
+            }
+            catch (Exception e)
+            {
+                MTLog.Write(MTLogType.Error, $"Error parsing days in JSON: {e}");
+            }
+
+            return null;
+        }
+
+        protected override MTConTime Parse(Dictionary<string, JsonElement> dictionary)
         {
             if (dictionary == null) return null;
 
@@ -255,63 +288,9 @@ namespace MetaQuotes.MT5WebAPI.Common.Protocol
                 obj.TimeServer = ConvertHelper.TypeConversation<string>(dictionary["TimeServer"]);
 
             if (dictionary.ContainsKey("Days"))
-                obj.Days = ParsingDays(dictionary["Days"] as ArrayList);
+                obj.Days = ParsingDays(dictionary["Days"]);
 
             return obj;
-        }
-
-
-        /// <summary>
-        /// parsing data fro days
-        /// </summary>
-        /// <param name="arrayList"></param>
-        private static MTConTime.EnTimeTableMode[][] ParsingDays(ArrayList arrayList)
-        {
-            if (arrayList == null) return null;
-            try
-            {
-                //--- get array of days
-                MTConTime.EnTimeTableMode[][] result = new MTConTime.EnTimeTableMode[arrayList.Count][];
-                int i = 0;
-                foreach (ArrayList values in arrayList)
-                {
-                    if (values == null) continue;
-                    result[i] = new MTConTime.EnTimeTableMode[values.Count];
-                    int j = 0;
-                    foreach (string value in values)
-                    {
-                        result[i][j] = (MTConTime.EnTimeTableMode)ConvertHelper.TypeConversation<Int32>(value);
-                        j++;
-                    }
-                    //---
-                    i++;
-                }
-                //---
-                return result;
-            }
-            catch (Exception e)
-            {
-                MTLog.Write(MTLogType.Error, string.Format("error pasing days in json, {0}", e));
-            }
-            return null;
-        }
-
-        public override MTConTime? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-        {
-            if (reader.TokenType != JsonTokenType.StartObject)
-                throw new JsonException("Expected start of object");
-
-            var dictionary = JsonSerializer.Deserialize<Dictionary<string, object>>(ref reader, options);
-
-            if (dictionary == null)
-                return null;
-
-            return ParseConTime(dictionary);
-        }
-
-        public override void Write(Utf8JsonWriter writer, MTConTime value, JsonSerializerOptions options)
-        {
-            JsonSerializer.Serialize(writer, value, options);
         }
     }
 }

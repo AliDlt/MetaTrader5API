@@ -6,7 +6,6 @@
 using MetaQuotes.MT5WebAPI.Common.Utils;
 using MT5WebAPI.Common.Utils;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 //---
 namespace MetaQuotes.MT5WebAPI.Common.Protocol
 {
@@ -120,105 +119,92 @@ namespace MetaQuotes.MT5WebAPI.Common.Protocol
     /// <summary>
     /// class parsin from json to MTConCommon
     /// </summary>
-    internal class MTConCommonConverter : JsonConverter<MTConCommon>
+    internal class MTConCommonConverter : CustomJsonConverter<MTConCommon>
     {
-        public override MTConCommon Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        protected override MTConCommon Parse(Dictionary<string, JsonElement> dictionary)
         {
-            if (reader.TokenType != JsonTokenType.StartObject)
-                throw new JsonException("Expected start of object");
+            if (dictionary == null)
+                return null;
 
             MTConCommon obj = new();
 
-            while (reader.Read())
+            foreach (var (propertyName, element) in dictionary)
             {
-                if (reader.TokenType == JsonTokenType.EndObject)
-                    break;
-
-                if (reader.TokenType == JsonTokenType.PropertyName)
+                switch (propertyName)
                 {
-                    string propertyName = reader.GetString();
-                    reader.Read();
-
-                    switch (propertyName)
-                    {
-                        case "Name":
-                            obj.Name = ConvertHelper.TypeConversation<string>(reader.GetString());
-                            break;
-                        case "Owner":
-                            obj.Owner = ConvertHelper.TypeConversation<string>(reader.GetString());
-                            break;
-                        case "OwnerID":
-                            obj.OwnerID = ConvertHelper.TypeConversation<string>(reader.GetString());
-                            break;
-                        case "OwnerHost":
-                            obj.OwnerHost = ConvertHelper.TypeConversation<string>(reader.GetString());
-                            break;
-                        case "OwnerEmail":
-                            obj.OwnerEmail = ConvertHelper.TypeConversation<string>(reader.GetString());
-                            break;
-                        case "Product":
-                            obj.Product = ConvertHelper.TypeConversation<string>(reader.GetString());
-                            break;
-                        case "ExpirationLicense":
-                            obj.ExpirationLicense = ConvertHelper.TypeConversation<Int64>(reader.GetInt64());
-                            break;
-                        case "ExpirationSupport":
-                            obj.ExpirationSupport = ConvertHelper.TypeConversation<Int64>(reader.GetInt64());
-                            break;
-                        case "LimitTradeServers":
-                            obj.LimitTradeServers = ConvertHelper.TypeConversation<UInt32>(reader.GetUInt32());
-                            break;
-                        case "LimitWebServers":
-                            obj.LimitWebServers = ConvertHelper.TypeConversation<UInt32>(reader.GetUInt32());
-                            break;
-                        case "LimitAccounts":
-                            obj.LimitAccounts = ConvertHelper.TypeConversation<UInt32>(reader.GetUInt32());
-                            break;
-                        case "LimitDeals":
-                            obj.LimitDeals = ConvertHelper.TypeConversation<UInt32>(reader.GetUInt32());
-                            break;
-                        case "LimitSymbols":
-                            obj.LimitSymbols = ConvertHelper.TypeConversation<UInt32>(reader.GetUInt32());
-                            break;
-                        case "LimitGroups":
-                            obj.LimitGroups = ConvertHelper.TypeConversation<UInt32>(reader.GetUInt32());
-                            break;
-                        case "LiveUpdateMode":
-                            obj.LiveUpdateMode = (EnUpdateMode)ConvertHelper.TypeConversation<UInt32>(reader.GetUInt32());
-                            break;
-                        case "TotalUsers":
-                            obj.TotalUsers = ConvertHelper.TypeConversation<UInt32>(reader.GetUInt32());
-                            break;
-                        case "TotalUsersReal":
-                            obj.TotalUsersReal = ConvertHelper.TypeConversation<UInt32>(reader.GetUInt32());
-                            break;
-                        case "TotalDeals":
-                            obj.TotalDeals = ConvertHelper.TypeConversation<UInt32>(reader.GetUInt32());
-                            break;
-                        case "TotalOrders":
-                            obj.TotalOrders = ConvertHelper.TypeConversation<UInt32>(reader.GetUInt32());
-                            break;
-                        case "TotalOrdersHistory":
-                            obj.TotalOrdersHistory = ConvertHelper.TypeConversation<UInt32>(reader.GetUInt32());
-                            break;
-                        case "TotalPositions":
-                            obj.TotalPositions = ConvertHelper.TypeConversation<UInt32>(reader.GetUInt32());
-                            break;
-                        case "AccountUrl":
-                            obj.AccountURL = ConvertHelper.TypeConversation<string>(reader.GetString());
-                            break;
-                        case "AccountAuto":
-                            obj.AccountAuto = ConvertHelper.TypeConversation<UInt32>(reader.GetUInt32());
-                            break;
-                    }
+                    case "Name":
+                        obj.Name = ConvertHelper.TypeConversation<string>(element);
+                        break;
+                    case "Owner":
+                        obj.Owner = ConvertHelper.TypeConversation<string>(element);
+                        break;
+                    case "OwnerID":
+                        obj.OwnerID = ConvertHelper.TypeConversation<string>(element);
+                        break;
+                    case "OwnerHost":
+                        obj.OwnerHost = ConvertHelper.TypeConversation<string>(element);
+                        break;
+                    case "OwnerEmail":
+                        obj.OwnerEmail = ConvertHelper.TypeConversation<string>(element);
+                        break;
+                    case "Product":
+                        obj.Product = ConvertHelper.TypeConversation<string>(element);
+                        break;
+                    case "ExpirationLicense":
+                        obj.ExpirationLicense = ConvertHelper.TypeConversation<Int64>(element);
+                        break;
+                    case "ExpirationSupport":
+                        obj.ExpirationSupport = ConvertHelper.TypeConversation<Int64>(element);
+                        break;
+                    case "LimitTradeServers":
+                        obj.LimitTradeServers = ConvertHelper.TypeConversation<UInt32>(element);
+                        break;
+                    case "LimitWebServers":
+                        obj.LimitWebServers = ConvertHelper.TypeConversation<UInt32>(element);
+                        break;
+                    case "LimitAccounts":
+                        obj.LimitAccounts = ConvertHelper.TypeConversation<UInt32>(element);
+                        break;
+                    case "LimitDeals":
+                        obj.LimitDeals = ConvertHelper.TypeConversation<UInt32>(element);
+                        break;
+                    case "LimitSymbols":
+                        obj.LimitSymbols = ConvertHelper.TypeConversation<UInt32>(element);
+                        break;
+                    case "LimitGroups":
+                        obj.LimitGroups = ConvertHelper.TypeConversation<UInt32>(element);
+                        break;
+                    case "LiveUpdateMode":
+                        obj.LiveUpdateMode = (EnUpdateMode)ConvertHelper.TypeConversation<UInt32>(element);
+                        break;
+                    case "TotalUsers":
+                        obj.TotalUsers = ConvertHelper.TypeConversation<UInt32>(element);
+                        break;
+                    case "TotalUsersReal":
+                        obj.TotalUsersReal = ConvertHelper.TypeConversation<UInt32>(element);
+                        break;
+                    case "TotalDeals":
+                        obj.TotalDeals = ConvertHelper.TypeConversation<UInt32>(element);
+                        break;
+                    case "TotalOrders":
+                        obj.TotalOrders = ConvertHelper.TypeConversation<UInt32>(element);
+                        break;
+                    case "TotalOrdersHistory":
+                        obj.TotalOrdersHistory = ConvertHelper.TypeConversation<UInt32>(element);
+                        break;
+                    case "TotalPositions":
+                        obj.TotalPositions = ConvertHelper.TypeConversation<UInt32>(element);
+                        break;
+                    case "AccountUrl":
+                        obj.AccountURL = ConvertHelper.TypeConversation<string>(element);
+                        break;
+                    case "AccountAuto":
+                        obj.AccountAuto = ConvertHelper.TypeConversation<UInt32>(element);
+                        break;
                 }
             }
 
             return obj;
-        }
-        public override void Write(Utf8JsonWriter writer, MTConCommon value, JsonSerializerOptions options)
-        {
-            JsonSerializer.Serialize(writer, value, options);
         }
 
     }

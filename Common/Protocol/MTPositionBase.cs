@@ -6,7 +6,6 @@
 using MetaQuotes.MT5WebAPI.Common.Utils;
 using MT5WebAPI.Common.Utils;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 //---
 namespace MetaQuotes.MT5WebAPI.Common.Protocol
 {
@@ -317,37 +316,19 @@ namespace MetaQuotes.MT5WebAPI.Common.Protocol
     /// <summary>
     /// class parsin from json to List MTPosition
     /// </summary>
-    internal class MTPositionPageConverter : JsonConverter<MTPosition>
+    internal class MTPositionPageConverter : CustomJsonConverter<MTPosition>
     {
-
-        public override MTPosition? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        protected override MTPosition Parse(Dictionary<string, JsonElement> dictionary)
         {
-            if (reader.TokenType != JsonTokenType.StartObject)
-                throw new JsonException("Expected start of object");
-
-            var dictionary = JsonSerializer.Deserialize<Dictionary<string, object>>(ref reader, options);
-
-            if (dictionary == null)
-                return null;
-
-            return (MTPosition?)MTPositionConverter.ParsePosition(dictionary);
-        }
-
-        public override void Write(Utf8JsonWriter writer, MTPosition value, JsonSerializerOptions options)
-        {
-            JsonSerializer.Serialize(writer, value, options);
+            throw new NotImplementedException();
         }
     }
     /// <summary>
     /// class parsin from json to MTPosition
     /// </summary>
-    internal class MTPositionConverter : JsonConverter<MTPosition>
+    internal class MTPositionConverter : CustomJsonConverter<MTPosition>
     {
-        /// <summary>
-        /// Parsing
-        /// </summary>
-        /// <param name="dictionary">list of object for parsing</param>
-        public static object ParsePosition(IDictionary<string, object> dictionary)
+        protected override MTPosition Parse(Dictionary<string, JsonElement> dictionary)
         {
             //---
             MTPosition obj = new();
@@ -446,24 +427,6 @@ namespace MetaQuotes.MT5WebAPI.Common.Protocol
                 obj.ActivationFlags = (MTPosition.EnTradeActivationFlags)ConvertHelper.TypeConversation<UInt32>(dictionary["ActivationFlags"]);
             //---
             return obj;
-        }
-
-        public override MTPosition? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-        {
-            if (reader.TokenType != JsonTokenType.StartObject)
-                throw new JsonException("Expected start of object");
-
-            var dictionary = JsonSerializer.Deserialize<Dictionary<string, object>>(ref reader, options);
-
-            if (dictionary == null)
-                return null;
-
-            return (MTPosition?)ParsePosition(dictionary);
-        }
-
-        public override void Write(Utf8JsonWriter writer, MTPosition value, JsonSerializerOptions options)
-        {
-            JsonSerializer.Serialize(writer, value, options);
         }
     }
 }

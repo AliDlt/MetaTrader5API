@@ -6,7 +6,6 @@
 using MetaQuotes.MT5WebAPI.Common.Utils;
 using MT5WebAPI.Common.Utils;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 //---
 namespace MetaQuotes.MT5WebAPI.Common.Protocol
 {
@@ -55,10 +54,12 @@ namespace MetaQuotes.MT5WebAPI.Common.Protocol
         {
             total = 0;
             //--- send request
-            Dictionary<string, string> data = new();
-            data.Add(MTProtocolConsts.WEB_PARAM_LOGIN, login.ToString());
-            data.Add(MTProtocolConsts.WEB_PARAM_FROM, from.ToString());
-            data.Add(MTProtocolConsts.WEB_PARAM_TO, to.ToString());
+            Dictionary<string, string> data = new()
+            {
+                { MTProtocolConsts.WEB_PARAM_LOGIN, login.ToString() },
+                { MTProtocolConsts.WEB_PARAM_FROM, from.ToString() },
+                { MTProtocolConsts.WEB_PARAM_TO, to.ToString() }
+            };
             //--- get answer
             byte[] answer;
             //--- send request
@@ -294,27 +295,9 @@ namespace MetaQuotes.MT5WebAPI.Common.Protocol
     /// <summary>
     /// class parsin from json to MTDeal
     /// </summary>
-    internal class MTDealConverter : JsonConverter<MTDeal>
+    internal class MTDealConverter : CustomJsonConverter<MTDeal>
     {
-        public override MTDeal Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-        {
-            if (reader.TokenType != JsonTokenType.StartObject)
-                throw new JsonException("Expected start of object");
-
-            var dictionary = JsonSerializer.Deserialize<Dictionary<string, object>>(ref reader, options);
-
-            if (dictionary == null)
-                return null;
-
-            return ParseDeal(dictionary);
-        }
-
-        public override void Write(Utf8JsonWriter writer, MTDeal value, JsonSerializerOptions options)
-        {
-            JsonSerializer.Serialize(writer, value, options);
-        }
-
-        public static MTDeal ParseDeal(IDictionary<string, object> dictionary)
+        protected override MTDeal Parse(Dictionary<string, JsonElement> dictionary)
         {
             if (dictionary == null) return null;
             //---
@@ -436,7 +419,6 @@ namespace MetaQuotes.MT5WebAPI.Common.Protocol
             //---
             return obj;
         }
-
     }
     /// <summary>
     /// get deal list
@@ -471,24 +453,11 @@ namespace MetaQuotes.MT5WebAPI.Common.Protocol
     /// <summary>
     /// class parsin from json to List MTDeal 
     /// </summary>
-    internal class MTDealPageConverter : JsonConverter<MTDeal>
+    internal class MTDealPageConverter : CustomJsonConverter<MTDeal>
     {
-        public override MTDeal Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        protected override MTDeal Parse(Dictionary<string, JsonElement> dictionary)
         {
-            if (reader.TokenType != JsonTokenType.StartObject)
-                throw new JsonException("Expected start of object");
-
-            var dictionary = JsonSerializer.Deserialize<Dictionary<string, object>>(ref reader, options);
-
-            if (dictionary == null)
-                return null;
-
-            return MTDealConverter.ParseDeal(dictionary);
-        }
-
-        public override void Write(Utf8JsonWriter writer, MTDeal value, JsonSerializerOptions options)
-        {
-            JsonSerializer.Serialize(writer, value, options);
+            throw new NotImplementedException();
         }
     }
 }

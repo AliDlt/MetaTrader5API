@@ -5,10 +5,8 @@
 //+------------------------------------------------------------------+
 using MetaQuotes.MT5WebAPI.Common.Utils;
 using MT5WebAPI.Common.Utils;
-using System.Collections;
 using System.Text;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 //---
 namespace MetaQuotes.MT5WebAPI.Common.Protocol
 {
@@ -297,21 +295,172 @@ namespace MetaQuotes.MT5WebAPI.Common.Protocol
     /// <summary>
     /// class parsin from json to MTConGroup
     /// </summary>
-    internal class MTConGroupConverter : JsonConverter<MTConGroup>
+    internal class MTConGroupConverter : CustomJsonConverter<MTConGroup>
     {
-        public override MTConGroup Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        private static List<uint> ParsingNewsLang(JsonElement newsLangsElement)
         {
-            if (reader.TokenType != JsonTokenType.StartObject)
-                throw new JsonException("Expected start of object");
-
-            var dictionary = JsonSerializer.Deserialize<Dictionary<string, object>>(ref reader, options);
-
-            if (dictionary == null)
+            if (newsLangsElement.ValueKind != JsonValueKind.Array)
                 return null;
 
-            return ParseGroup(dictionary);
+            List<uint> result = new();
+
+            foreach (JsonElement langElement in newsLangsElement.EnumerateArray())
+            {
+                if (langElement.ValueKind == JsonValueKind.String)
+                {
+                    result.Add(ConvertHelper.TypeConversation<uint>(langElement.GetString()));
+                }
+            }
+
+            return result;
         }
-        public static MTConGroup ParseGroup(IDictionary<string, object> dictionary)
+
+        private static List<MTConGroupSymbol> ParsingSymbols(JsonElement symbolsElement)
+        {
+            if (symbolsElement.ValueKind != JsonValueKind.Array)
+                return null;
+
+            List<MTConGroupSymbol> result = new();
+
+            foreach (JsonElement symbolElement in symbolsElement.EnumerateArray())
+            {
+                if (symbolElement.ValueKind == JsonValueKind.Object)
+                {
+                    try
+                    {
+                        Dictionary<string, JsonElement> symbolDictionary = symbolElement.EnumerateObject()
+                            .ToDictionary(kv => kv.Name, kv => kv.Value);
+
+                        result.Add(MTConSymbolConverter.ParseGroupSymbol(symbolDictionary));
+                    }
+                    catch (Exception e)
+                    {
+                        MTLog.Write(MTLogType.Error, $"Parsing symbols failed: {e}");
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        private static MTConCommission ParsingComission(Dictionary<string, JsonElement> dictionary)
+        {
+            if (dictionary == null) return null;
+            //---
+            MTConCommission obj = new();
+            //---
+            if (dictionary.ContainsKey("Name"))
+                obj.Name = ConvertHelper.TypeConversation<string>(dictionary["Name"]);
+            //---
+            if (dictionary.ContainsKey("Description"))
+                obj.Description = ConvertHelper.TypeConversation<string>(dictionary["Description"]);
+            //---
+            if (dictionary.ContainsKey("Path"))
+                obj.Path = ConvertHelper.TypeConversation<string>(dictionary["Path"]);
+            //---
+            if (dictionary.ContainsKey("Mode"))
+                obj.Mode = (MTConCommission.EnCommMode)ConvertHelper.TypeConversation<UInt32>(dictionary["Mode"]);
+            //---
+            if (dictionary.ContainsKey("RangeMode"))
+                obj.RangeMode = (MTConCommission.EnCommRangeMode)ConvertHelper.TypeConversation<UInt32>(dictionary["RangeMode"]);
+            //---
+            if (dictionary.ContainsKey("ChargeMode"))
+                obj.ChargeMode = (MTConCommission.EnCommChargeMode)ConvertHelper.TypeConversation<UInt32>(dictionary["ChargeMode"]);
+            //---
+            if (dictionary.ContainsKey("TurnoverCurrency"))
+                obj.TurnoverCurrency = ConvertHelper.TypeConversation<string>(dictionary["TurnoverCurrency"]);
+            //---
+            if (dictionary.ContainsKey("EntryMode"))
+                obj.EntryMode = (MTConCommission.EnCommEntryMode)ConvertHelper.TypeConversation<UInt32>(dictionary["EntryMode"]);
+            //---
+            if (dictionary.ContainsKey("Tiers"))
+                obj.Tiers = ParsingTiers(dictionary["Tiers"]);
+            //---
+            return obj;
+        }
+
+        private static List<MTConCommission> ParsingCommissions(JsonElement commissionsElement)
+        {
+            if (commissionsElement.ValueKind != JsonValueKind.Array)
+                return null;
+
+            List<MTConCommission> result = new();
+
+            foreach (JsonElement commissionElement in commissionsElement.EnumerateArray())
+            {
+                if (commissionElement.ValueKind == JsonValueKind.Object)
+                {
+                    Dictionary<string, JsonElement> commissionInfoDictionary = commissionElement.EnumerateObject()
+                        .ToDictionary(kv => kv.Name, kv => kv.Value);
+
+                    MTConCommission temp = ParsingComission(commissionInfoDictionary);
+                    if (temp != null)
+                        result.Add(temp);
+                }
+            }
+
+            return result;
+        }
+
+
+        private static List<MTConCommTier> ParsingTiers(JsonElement tiersElement)
+        {
+            if (tiersElement.ValueKind != JsonValueKind.Array)
+                return null;
+
+            List<MTConCommTier> result = new();
+
+            foreach (JsonElement tierElement in tiersElement.EnumerateArray())
+            {
+                if (tierElement.ValueKind == JsonValueKind.Object)
+                {
+                    Dictionary<string, JsonElement> tierInfoDictionary = tierElement.EnumerateObject()
+                        .ToDictionary(kv => kv.Name, kv => kv.Value);
+
+                    MTConCommTier temp = ParsingTier(tierInfoDictionary);
+                    if (temp != null)
+                        result.Add(temp);
+                }
+            }
+
+            return result;
+        }
+
+
+        private static MTConCommTier ParsingTier(Dictionary<string, JsonElement> dictionary)
+        {
+            if (dictionary == null) return null;
+            //---
+            MTConCommTier obj = new();
+            //---
+            if (dictionary.ContainsKey("Mode"))
+                obj.Mode = (MTConCommTier.EnCommissionMode)ConvertHelper.TypeConversation<UInt32>(dictionary["Mode"]);
+            //---
+            if (dictionary.ContainsKey("Type"))
+                obj.Type = (MTConCommTier.EnCommissionVolumeType)ConvertHelper.TypeConversation<UInt32>(dictionary["Type"]);
+            //---
+            if (dictionary.ContainsKey("Value"))
+                obj.Value = ConvertHelper.TypeConversation<double>(dictionary["Value"]);
+            //---
+            if (dictionary.ContainsKey("Minimal"))
+                obj.Minimal = ConvertHelper.TypeConversation<double>(dictionary["Minimal"]);
+            //---
+            if (dictionary.ContainsKey("RangeFrom"))
+                obj.RangeFrom = ConvertHelper.TypeConversation<double>(dictionary["RangeFrom"]);
+            //---
+            if (dictionary.ContainsKey("RangeTo"))
+                obj.RangeTo = ConvertHelper.TypeConversation<double>(dictionary["RangeTo"]);
+            //---
+            if (dictionary.ContainsKey("Currency"))
+                obj.Currency = ConvertHelper.TypeConversation<string>(dictionary["Currency"]);
+            //---
+            if (dictionary.ContainsKey("Maximal"))
+                obj.Maximal = ConvertHelper.TypeConversation<double>(dictionary["Maximal"]);
+            //---
+            return obj;
+        }
+
+        protected override MTConGroup Parse(Dictionary<string, JsonElement> dictionary)
         {
             if (dictionary == null) return null;
             //---
@@ -381,7 +530,7 @@ namespace MetaQuotes.MT5WebAPI.Common.Protocol
                 obj.NewsCategory = ConvertHelper.TypeConversation<string>(dictionary["NewsCategory"]);
             //---
             if (dictionary.ContainsKey("NewsLangs"))
-                obj.NewsLangs = ParsingNewsLang(dictionary["NewsLangs"] as ArrayList);
+                obj.NewsLangs = ParsingNewsLang(dictionary["NewsLangs"]);
             //---
             if (dictionary.ContainsKey("MailMode"))
                 obj.MailMode = (MTConGroup.EnMailMode)ConvertHelper.TypeConversation<UInt32>(dictionary["MailMode"]);
@@ -435,168 +584,10 @@ namespace MetaQuotes.MT5WebAPI.Common.Protocol
                 obj.LimitPositions = ConvertHelper.TypeConversation<UInt32>(dictionary["LimitPositions"]);
             //---
             if (dictionary.ContainsKey("Commissions"))
-                obj.Commissions = ParsingCommissions(dictionary["Commissions"] as ArrayList);
+                obj.Commissions = ParsingCommissions(dictionary["Commissions"]);
             //---
             if (dictionary.ContainsKey("Symbols"))
-                obj.Symbols = ParsingSymbols(dictionary["Symbols"] as ArrayList);
-            //---
-            return obj;
-        }
-
-        public override void Write(Utf8JsonWriter writer, MTConGroup value, JsonSerializerOptions options)
-        {
-            // Implement serialization logic if needed
-            throw new NotImplementedException();
-        }
-
-        private static string GetString(JsonElement element, string propertyName)
-        {
-            return element.TryGetProperty(propertyName, out var property) ? property.GetString() : null;
-        }
-
-        private static ulong GetUInt64(JsonElement element, string propertyName)
-        {
-            return element.TryGetProperty(propertyName, out var property) ? property.GetUInt64() : 0;
-        }
-
-        private static uint GetUInt32(JsonElement element, string propertyName)
-        {
-            return element.TryGetProperty(propertyName, out var property) ? property.GetUInt32() : 0;
-        }
-
-        private static double GetDouble(JsonElement element, string propertyName)
-        {
-            return element.TryGetProperty(propertyName, out var property) ? property.GetDouble() : 0.0;
-        }
-
-        private static List<uint> ParsingNewsLang(ArrayList languages)
-        {
-            if (languages == null) return null;
-            //---
-            List<uint> result = new();
-            foreach (string lang in languages)
-            {
-                result.Add(ConvertHelper.TypeConversation<UInt32>(lang));
-            }
-            return result;
-        }
-
-        private static List<MTConGroupSymbol> ParsingSymbols(ArrayList symbols)
-        {
-            if (symbols == null) return null;
-            //---
-            List<MTConGroupSymbol> result = new();
-            //---
-            foreach (Dictionary<string, object> symbol in symbols)
-            {
-                try
-                {
-                    result.Add(MTConSymbolConverter.ParseGroupSymbol(symbol));
-                }
-                catch (Exception e)
-                {
-                    MTLog.Write(MTLogType.Error, string.Format("parsing symbols failed, {0}", e));
-                }
-            }
-            //---
-            return result;
-        }
-
-        private static List<MTConCommission> ParsingCommissions(ArrayList commissions)
-        {
-            if (commissions == null) return null;
-            //---
-            List<MTConCommission> result = new();
-            //---
-            foreach (Dictionary<string, object> commissionInfo in commissions)
-            {
-                MTConCommission temp = ParsingComission(commissionInfo);
-                if (temp != null) result.Add(temp);
-            }
-            //---     
-            return result;
-        }
-
-        private static MTConCommission ParsingComission(Dictionary<string, object> dictionary)
-        {
-            if (dictionary == null) return null;
-            //---
-            MTConCommission obj = new();
-            //---
-            if (dictionary.ContainsKey("Name"))
-                obj.Name = ConvertHelper.TypeConversation<string>(dictionary["Name"]);
-            //---
-            if (dictionary.ContainsKey("Description"))
-                obj.Description = ConvertHelper.TypeConversation<string>(dictionary["Description"]);
-            //---
-            if (dictionary.ContainsKey("Path"))
-                obj.Path = ConvertHelper.TypeConversation<string>(dictionary["Path"]);
-            //---
-            if (dictionary.ContainsKey("Mode"))
-                obj.Mode = (MTConCommission.EnCommMode)ConvertHelper.TypeConversation<UInt32>(dictionary["Mode"]);
-            //---
-            if (dictionary.ContainsKey("RangeMode"))
-                obj.RangeMode = (MTConCommission.EnCommRangeMode)ConvertHelper.TypeConversation<UInt32>(dictionary["RangeMode"]);
-            //---
-            if (dictionary.ContainsKey("ChargeMode"))
-                obj.ChargeMode = (MTConCommission.EnCommChargeMode)ConvertHelper.TypeConversation<UInt32>(dictionary["ChargeMode"]);
-            //---
-            if (dictionary.ContainsKey("TurnoverCurrency"))
-                obj.TurnoverCurrency = ConvertHelper.TypeConversation<string>(dictionary["TurnoverCurrency"]);
-            //---
-            if (dictionary.ContainsKey("EntryMode"))
-                obj.EntryMode = (MTConCommission.EnCommEntryMode)ConvertHelper.TypeConversation<UInt32>(dictionary["EntryMode"]);
-            //---
-            if (dictionary.ContainsKey("Tiers"))
-                obj.Tiers = ParsingTiers(dictionary["Tiers"] as ArrayList);
-            //---
-            return obj;
-        }
-
-        private static List<MTConCommTier> ParsingTiers(ArrayList tiers)
-        {
-            if (tiers == null) return null;
-            //---
-            List<MTConCommTier> result = new();
-            //---
-            foreach (Dictionary<string, object> tierInfo in tiers)
-            {
-                MTConCommTier temp = ParsingTier(tierInfo);
-                if (temp != null) result.Add(temp);
-            }
-            //---
-            return result;
-        }
-
-        private static MTConCommTier ParsingTier(Dictionary<string, object> dictionary)
-        {
-            if (dictionary == null) return null;
-            //---
-            MTConCommTier obj = new();
-            //---
-            if (dictionary.ContainsKey("Mode"))
-                obj.Mode = (MTConCommTier.EnCommissionMode)ConvertHelper.TypeConversation<UInt32>(dictionary["Mode"]);
-            //---
-            if (dictionary.ContainsKey("Type"))
-                obj.Type = (MTConCommTier.EnCommissionVolumeType)ConvertHelper.TypeConversation<UInt32>(dictionary["Type"]);
-            //---
-            if (dictionary.ContainsKey("Value"))
-                obj.Value = ConvertHelper.TypeConversation<double>(dictionary["Value"]);
-            //---
-            if (dictionary.ContainsKey("Minimal"))
-                obj.Minimal = ConvertHelper.TypeConversation<double>(dictionary["Minimal"]);
-            //---
-            if (dictionary.ContainsKey("RangeFrom"))
-                obj.RangeFrom = ConvertHelper.TypeConversation<double>(dictionary["RangeFrom"]);
-            //---
-            if (dictionary.ContainsKey("RangeTo"))
-                obj.RangeTo = ConvertHelper.TypeConversation<double>(dictionary["RangeTo"]);
-            //---
-            if (dictionary.ContainsKey("Currency"))
-                obj.Currency = ConvertHelper.TypeConversation<string>(dictionary["Currency"]);
-            //---
-            if (dictionary.ContainsKey("Maximal"))
-                obj.Maximal = ConvertHelper.TypeConversation<double>(dictionary["Maximal"]);
+                obj.Symbols = ParsingSymbols(dictionary["Symbols"]);
             //---
             return obj;
         }

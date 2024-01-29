@@ -6,7 +6,6 @@
 using MetaQuotes.MT5WebAPI.Common.Utils;
 using MT5WebAPI.Common.Utils;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 //---
 namespace MetaQuotes.MT5WebAPI.Common.Protocol
 {
@@ -241,7 +240,7 @@ namespace MetaQuotes.MT5WebAPI.Common.Protocol
     /// </summary>
     class MTTickConverter : CustomJsonConverter<MTTick>
     {
-        private static MTTick ParseTick(IDictionary<string, object> dictionary)
+        protected override MTTick Parse(Dictionary<string, JsonElement> dictionary)
         {
             if (dictionary == null)
                 return null;
@@ -281,7 +280,6 @@ namespace MetaQuotes.MT5WebAPI.Common.Protocol
             //---
             return obj;
         }
-
     }
     /// <summary>
     /// get tick info
@@ -317,13 +315,9 @@ namespace MetaQuotes.MT5WebAPI.Common.Protocol
     /// <summary>
     /// class parsin from json to List MTTickStat
     /// </summary>
-    class MT5TickStatConverter : JsonConverter<MTTickStat>
+    class MT5TickStatConverter : CustomJsonConverter<MTTickStat>
     {
-        /// <summary>
-        /// Parsing
-        /// </summary>
-        /// <param name="dictionary">list of object for parsing</param>
-        private static MTTickStat ParseTickStat(IDictionary<string, object> dictionary)
+        protected override MTTickStat Parse(Dictionary<string, JsonElement> dictionary)
         {
             if (dictionary == null) return null;
             //---
@@ -447,24 +441,6 @@ namespace MetaQuotes.MT5WebAPI.Common.Protocol
                 obj.PriceTheoretical = ConvertHelper.TypeConversation<double>(dictionary["PriceTheoretical"]);
             //---
             return obj;
-        }
-
-        public override MTTickStat? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-        {
-            if (reader.TokenType != JsonTokenType.StartObject)
-                throw new JsonException("Expected start of object");
-
-            var dictionary = JsonSerializer.Deserialize<Dictionary<string, object>>(ref reader, options);
-
-            if (dictionary == null)
-                return null;
-
-            return ParseTickStat(dictionary);
-        }
-
-        public override void Write(Utf8JsonWriter writer, MTTickStat value, JsonSerializerOptions options)
-        {
-            JsonSerializer.Serialize(writer, value, options);
         }
     }
 }

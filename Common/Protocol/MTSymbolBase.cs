@@ -5,10 +5,8 @@
 //+------------------------------------------------------------------+
 using MetaQuotes.MT5WebAPI.Common.Utils;
 using MT5WebAPI.Common.Utils;
-using System.Collections;
 using System.Text;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 //---
 namespace MetaQuotes.MT5WebAPI.Common.Protocol
 {
@@ -335,32 +333,9 @@ namespace MetaQuotes.MT5WebAPI.Common.Protocol
     /// <summary>
     /// class parsing from json to MTConCommon
     /// </summary>
-    internal class MTConSymbolConverter : JsonConverter<MTConSymbol>
+    internal class MTConSymbolConverter : CustomJsonConverter<MTConSymbol>
     {
-        public override MTConSymbol Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-        {
-            if (reader.TokenType != JsonTokenType.StartObject)
-                throw new JsonException("Expected start of object");
-
-            var dictionary = JsonSerializer.Deserialize<Dictionary<string, object>>(ref reader, options);
-
-            if (dictionary == null)
-                return null;
-
-            return ParseSymbol(dictionary);
-        }
-
-        public override void Write(Utf8JsonWriter writer, MTConSymbol value, JsonSerializerOptions options)
-        {
-            JsonSerializer.Serialize(writer, value, options);
-        }
-
-        /// <summary>
-        /// parsing one symbol
-        /// </summary>
-        /// <param name="symbol"></param>
-
-        public static MTConSymbol ParseSymbol(Dictionary<string, object> symbol)
+        public static MTConSymbol ParseSymbol(Dictionary<string, JsonElement> symbol)
         {
             if (symbol == null) return null;
             MTConSymbol conSymbol = new();
@@ -393,268 +368,268 @@ namespace MetaQuotes.MT5WebAPI.Common.Protocol
                 conSymbol.CurrencyBase = ConvertHelper.TypeConversation<string>(symbol["CurrencyBase"]);
             //---
             if (symbol.ContainsKey("CurrencyBaseDigits"))
-                conSymbol.CurrencyBaseDigits = GetUInt(symbol["CurrencyBaseDigits"]);
+                conSymbol.CurrencyBaseDigits = ConvertHelper.TypeConversation<uint>(symbol["CurrencyBaseDigits"]);
             //---
             if (symbol.ContainsKey("CurrencyProfit"))
                 conSymbol.CurrencyProfit = ConvertHelper.TypeConversation<string>(symbol["CurrencyProfit"]);
             //---
             if (symbol.ContainsKey("CurrencyProfitDigits"))
-                conSymbol.CurrencyProfitDigits = GetUInt(symbol["CurrencyProfitDigits"]);
+                conSymbol.CurrencyProfitDigits = ConvertHelper.TypeConversation<uint>(symbol["CurrencyProfitDigits"]);
             //---
             if (symbol.ContainsKey("CurrencyMargin"))
                 conSymbol.CurrencyMargin = ConvertHelper.TypeConversation<string>(symbol["CurrencyMargin"]);
             //---
             if (symbol.ContainsKey("CurrencyMarginDigits"))
-                conSymbol.CurrencyMarginDigits = GetUInt(symbol["CurrencyMarginDigits"]);
+                conSymbol.CurrencyMarginDigits = ConvertHelper.TypeConversation<uint>(symbol["CurrencyMarginDigits"]);
             //---
             if (symbol.ContainsKey("Color"))
-                conSymbol.Color = GetUInt(symbol["Color"]);
+                conSymbol.Color = ConvertHelper.TypeConversation<uint>(symbol["Color"]);
             //---
             if (symbol.ContainsKey("ColorBackground"))
-                conSymbol.ColorBackground = GetUInt(symbol["ColorBackground"]);
+                conSymbol.ColorBackground = ConvertHelper.TypeConversation<uint>(symbol["ColorBackground"]);
             //---
             if (symbol.ContainsKey("Digits"))
-                conSymbol.Digits = GetUInt(symbol["Digits"]);
+                conSymbol.Digits = ConvertHelper.TypeConversation<uint>(symbol["Digits"]);
             //---
             if (symbol.ContainsKey("Point"))
-                conSymbol.Point = GetDouble(symbol["Point"]);
+                conSymbol.Point = ConvertHelper.TypeConversation<double>(symbol["Point"]);
             //---
             if (symbol.ContainsKey("Multiply"))
-                conSymbol.Multiply = GetDouble(symbol["Multiply"]);
+                conSymbol.Multiply = ConvertHelper.TypeConversation<double>(symbol["Multiply"]);
             //---
             if (symbol.ContainsKey("TickFlags"))
-                conSymbol.TickFlags = (MTConSymbol.EnTickFlags)GetULong(symbol["TickFlags"]);
+                conSymbol.TickFlags = (MTConSymbol.EnTickFlags)ConvertHelper.TypeConversation<ulong>(symbol["TickFlags"]);
             //---
             if (symbol.ContainsKey("TickBookDepth"))
-                conSymbol.TickBookDepth = GetUInt(symbol["TickBookDepth"]);
+                conSymbol.TickBookDepth = ConvertHelper.TypeConversation<uint>(symbol["TickBookDepth"]);
             //---
             if (symbol.ContainsKey("TickChartMode"))
-                conSymbol.ChartMode = (MTConSymbol.EnChartMode)GetUInt(symbol["TickChartMode"]);
+                conSymbol.ChartMode = (MTConSymbol.EnChartMode)ConvertHelper.TypeConversation<uint>(symbol["TickChartMode"]);
             //---
             if (symbol.ContainsKey("FilterSoft"))
-                conSymbol.FilterSoft = GetUInt(symbol["FilterSoft"]);
+                conSymbol.FilterSoft = ConvertHelper.TypeConversation<uint>(symbol["FilterSoft"]);
             //---
             if (symbol.ContainsKey("FilterSoftTicks"))
-                conSymbol.FilterSoftTicks = GetUInt(symbol["FilterSoftTicks"]);
+                conSymbol.FilterSoftTicks = ConvertHelper.TypeConversation<uint>(symbol["FilterSoftTicks"]);
             //---
             if (symbol.ContainsKey("FilterHard"))
-                conSymbol.FilterHard = GetUInt(symbol["FilterHard"]);
+                conSymbol.FilterHard = ConvertHelper.TypeConversation<uint>(symbol["FilterHard"]);
             //---
             if (symbol.ContainsKey("FilterHardTicks"))
-                conSymbol.FilterHardTicks = GetUInt(symbol["FilterHardTicks"]);
+                conSymbol.FilterHardTicks = ConvertHelper.TypeConversation<uint>(symbol["FilterHardTicks"]);
             //---
             if (symbol.ContainsKey("FilterDiscard"))
-                conSymbol.FilterDiscard = GetUInt(symbol["FilterDiscard"]);
+                conSymbol.FilterDiscard = ConvertHelper.TypeConversation<uint>(symbol["FilterDiscard"]);
             //---
             if (symbol.ContainsKey("FilterSpreadMax"))
-                conSymbol.FilterSpreadMax = GetUInt(symbol["FilterSpreadMax"]);
+                conSymbol.FilterSpreadMax = ConvertHelper.TypeConversation<uint>(symbol["FilterSpreadMax"]);
             //---
             if (symbol.ContainsKey("FilterSpreadMin"))
-                conSymbol.FilterSpreadMin = GetUInt(symbol["FilterSpreadMin"]);
+                conSymbol.FilterSpreadMin = ConvertHelper.TypeConversation<uint>(symbol["FilterSpreadMin"]);
             //---
             if (symbol.ContainsKey("FilterGap"))
-                conSymbol.FilterGap = GetUInt(symbol["FilterGap"]);
+                conSymbol.FilterGap = ConvertHelper.TypeConversation<uint>(symbol["FilterGap"]);
             //---
             if (symbol.ContainsKey("FilterGapTicks"))
-                conSymbol.FilterGapTicks = GetUInt(symbol["FilterGapTicks"]);
+                conSymbol.FilterGapTicks = ConvertHelper.TypeConversation<uint>(symbol["FilterGapTicks"]);
             //---
             if (symbol.ContainsKey("TradeMode"))
-                conSymbol.TradeMode = (MTConSymbol.EnTradeMode)GetUInt(symbol["TradeMode"]);
+                conSymbol.TradeMode = (MTConSymbol.EnTradeMode)ConvertHelper.TypeConversation<uint>(symbol["TradeMode"]);
             //---
             if (symbol.ContainsKey("TradeFlags"))
-                conSymbol.TradeFlags = (MTConSymbol.EnTradeFlags)GetULong(symbol["TradeFlags"]);
+                conSymbol.TradeFlags = (MTConSymbol.EnTradeFlags)ConvertHelper.TypeConversation<ulong>(symbol["TradeFlags"]);
             //---
             if (symbol.ContainsKey("CalcMode"))
-                conSymbol.CalcMode = (MTConSymbol.EnCalcMode)GetUInt(symbol["CalcMode"]);
+                conSymbol.CalcMode = (MTConSymbol.EnCalcMode)ConvertHelper.TypeConversation<uint>(symbol["CalcMode"]);
             //---
             if (symbol.ContainsKey("ExecMode"))
-                conSymbol.ExecMode = (MTConSymbol.EnExecutionMode)GetUInt(symbol["ExecMode"]);
+                conSymbol.ExecMode = (MTConSymbol.EnExecutionMode)ConvertHelper.TypeConversation<uint>(symbol["ExecMode"]);
             //---
             if (symbol.ContainsKey("GTCMode"))
-                conSymbol.GTCMode = (MTConSymbol.EnGTCMode)GetUInt(symbol["GTCMode"]);
+                conSymbol.GTCMode = (MTConSymbol.EnGTCMode)ConvertHelper.TypeConversation<uint>(symbol["GTCMode"]);
             //---
             if (symbol.ContainsKey("FillFlags"))
-                conSymbol.FillFlags = (MTConSymbol.EnFillingFlags)GetUInt(symbol["FillFlags"]);
+                conSymbol.FillFlags = (MTConSymbol.EnFillingFlags)ConvertHelper.TypeConversation<uint>(symbol["FillFlags"]);
             //---
             if (symbol.ContainsKey("ExpirFlags"))
-                conSymbol.ExpirFlags = (MTConSymbol.EnExpirationFlags)GetUInt(symbol["ExpirFlags"]);
+                conSymbol.ExpirFlags = (MTConSymbol.EnExpirationFlags)ConvertHelper.TypeConversation<uint>(symbol["ExpirFlags"]);
             //---
             if (symbol.ContainsKey("OrderFlags"))
-                conSymbol.OrderFlags = (MTConSymbol.EnOrderFlags)GetUInt(symbol["OrderFlags"]);
+                conSymbol.OrderFlags = (MTConSymbol.EnOrderFlags)ConvertHelper.TypeConversation<uint>(symbol["OrderFlags"]);
             //---
             if (symbol.ContainsKey("Spread"))
-                conSymbol.Spread = GetInt(symbol["Spread"]);
+                conSymbol.Spread = ConvertHelper.TypeConversation<int>(symbol["Spread"]);
             //---
             if (symbol.ContainsKey("SpreadBalance"))
-                conSymbol.SpreadBalance = GetInt(symbol["SpreadBalance"]);
+                conSymbol.SpreadBalance = ConvertHelper.TypeConversation<int>(symbol["SpreadBalance"]);
             //---
             if (symbol.ContainsKey("SpreadDiff"))
-                conSymbol.SpreadDiff = GetInt(symbol["SpreadDiff"]);
+                conSymbol.SpreadDiff = ConvertHelper.TypeConversation<int>(symbol["SpreadDiff"]);
             //---
             if (symbol.ContainsKey("SpreadDiffBalance"))
-                conSymbol.SpreadDiffBalance = GetInt(symbol["SpreadDiffBalance"]);
+                conSymbol.SpreadDiffBalance = ConvertHelper.TypeConversation<int>(symbol["SpreadDiffBalance"]);
             //---
             if (symbol.ContainsKey("TickValue"))
-                conSymbol.TickValue = GetDouble(symbol["TickValue"]);
+                conSymbol.TickValue = ConvertHelper.TypeConversation<double>(symbol["TickValue"]);
             //---
             if (symbol.ContainsKey("TickSize"))
-                conSymbol.TickSize = GetDouble(symbol["TickSize"]);
+                conSymbol.TickSize = ConvertHelper.TypeConversation<double>(symbol["TickSize"]);
             //---
             if (symbol.ContainsKey("ContractSize"))
-                conSymbol.ContractSize = GetDouble(symbol["ContractSize"]);
+                conSymbol.ContractSize = ConvertHelper.TypeConversation<double>(symbol["ContractSize"]);
             //---
             if (symbol.ContainsKey("StopsLevel"))
-                conSymbol.StopsLevel = GetInt(symbol["StopsLevel"]);
+                conSymbol.StopsLevel = ConvertHelper.TypeConversation<int>(symbol["StopsLevel"]);
             //---
             if (symbol.ContainsKey("FreezeLevel"))
-                conSymbol.FreezeLevel = GetInt(symbol["FreezeLevel"]);
+                conSymbol.FreezeLevel = ConvertHelper.TypeConversation<int>(symbol["FreezeLevel"]);
             //---
             if (symbol.ContainsKey("QuotesTimeout"))
-                conSymbol.QuotesTimeout = GetUInt(symbol["QuotesTimeout"]);
+                conSymbol.QuotesTimeout = ConvertHelper.TypeConversation<uint>(symbol["QuotesTimeout"]);
             //---
             if (symbol.ContainsKey("VolumeMin"))
-                conSymbol.VolumeMin = GetULong(symbol["VolumeMin"]);
+                conSymbol.VolumeMin = ConvertHelper.TypeConversation<ulong>(symbol["VolumeMin"]);
             //---
             if (symbol.ContainsKey("VolumeMinExt"))
-                conSymbol.VolumeMinExt = GetULong(symbol["VolumeMinExt"]);
+                conSymbol.VolumeMinExt = ConvertHelper.TypeConversation<ulong>(symbol["VolumeMinExt"]);
             //---
             if (symbol.ContainsKey("VolumeMax"))
-                conSymbol.VolumeMax = GetULong(symbol["VolumeMax"]);
+                conSymbol.VolumeMax = ConvertHelper.TypeConversation<ulong>(symbol["VolumeMax"]);
             //---
             if (symbol.ContainsKey("VolumeMaxExt"))
-                conSymbol.VolumeMaxExt = GetULong(symbol["VolumeMaxExt"]);
+                conSymbol.VolumeMaxExt = ConvertHelper.TypeConversation<ulong>(symbol["VolumeMaxExt"]);
             //---
             if (symbol.ContainsKey("VolumeStep"))
-                conSymbol.VolumeStep = GetULong(symbol["VolumeStep"]);
+                conSymbol.VolumeStep = ConvertHelper.TypeConversation<ulong>(symbol["VolumeStep"]);
             //---
             if (symbol.ContainsKey("VolumeStepExt"))
-                conSymbol.VolumeStepExt = GetULong(symbol["VolumeStepExt"]);
+                conSymbol.VolumeStepExt = ConvertHelper.TypeConversation<ulong>(symbol["VolumeStepExt"]);
             //---
             if (symbol.ContainsKey("VolumeLimit"))
-                conSymbol.VolumeLimit = GetULong(symbol["VolumeLimit"]);
+                conSymbol.VolumeLimit = ConvertHelper.TypeConversation<ulong>(symbol["VolumeLimit"]);
             //---
             if (symbol.ContainsKey("VolumeLimitExt"))
-                conSymbol.VolumeLimitExt = GetULong(symbol["VolumeLimitExt"]);
+                conSymbol.VolumeLimitExt = ConvertHelper.TypeConversation<ulong>(symbol["VolumeLimitExt"]);
             //---
             if (symbol.ContainsKey("MarginCheckMode"))
-                conSymbol.MarginFlags = conSymbol.MarginCheckMode = (MTConSymbol.EnMarginFlags)GetUInt(symbol["MarginCheckMode"]);
+                conSymbol.MarginFlags = conSymbol.MarginCheckMode = (MTConSymbol.EnMarginFlags)ConvertHelper.TypeConversation<uint>(symbol["MarginCheckMode"]);
             //---
             if (symbol.ContainsKey("MarginFlags"))
-                conSymbol.MarginFlags = conSymbol.MarginCheckMode = (MTConSymbol.EnMarginFlags)GetUInt(symbol["MarginFlags"]);
+                conSymbol.MarginFlags = conSymbol.MarginCheckMode = (MTConSymbol.EnMarginFlags)ConvertHelper.TypeConversation<uint>(symbol["MarginFlags"]);
             //---
             if (symbol.ContainsKey("MarginInitial"))
-                conSymbol.MarginInitial = GetDouble(symbol["MarginInitial"]);
+                conSymbol.MarginInitial = ConvertHelper.TypeConversation<double>(symbol["MarginInitial"]);
             //---
             if (symbol.ContainsKey("MarginMaintenance"))
-                conSymbol.MarginMaintenance = GetDouble(symbol["MarginMaintenance"]);
+                conSymbol.MarginMaintenance = ConvertHelper.TypeConversation<double>(symbol["MarginMaintenance"]);
             //---
             conSymbol.MarginRateInitial = GetMarginRateInitial(symbol);
             conSymbol.MarginRateMaintenance = MarginRateMaintenance(symbol);
             //---
             if (symbol.ContainsKey("MarginLong"))
-                conSymbol.MarginLong = GetDouble(symbol["MarginLong"]);
+                conSymbol.MarginLong = ConvertHelper.TypeConversation<double>(symbol["MarginLong"]);
             //---
             if (symbol.ContainsKey("MarginShort"))
-                conSymbol.MarginShort = GetDouble(symbol["MarginShort"]);
+                conSymbol.MarginShort = ConvertHelper.TypeConversation<double>(symbol["MarginShort"]);
             //---
             if (symbol.ContainsKey("MarginLimit"))
-                conSymbol.MarginLimit = GetDouble(symbol["MarginLimit"]);
+                conSymbol.MarginLimit = ConvertHelper.TypeConversation<double>(symbol["MarginLimit"]);
             //---
             if (symbol.ContainsKey("MarginStop"))
-                conSymbol.MarginStop = GetDouble(symbol["MarginStop"]);
+                conSymbol.MarginStop = ConvertHelper.TypeConversation<double>(symbol["MarginStop"]);
             //---
             if (symbol.ContainsKey("MarginStopLimit"))
-                conSymbol.MarginStopLimit = GetDouble(symbol["MarginStopLimit"]);
+                conSymbol.MarginStopLimit = ConvertHelper.TypeConversation<double>(symbol["MarginStopLimit"]);
             //---
             if (symbol.ContainsKey("MarginLiquidity"))
-                conSymbol.MarginRateLiquidity = GetDouble(symbol["MarginLiquidity"]);
+                conSymbol.MarginRateLiquidity = ConvertHelper.TypeConversation<double>(symbol["MarginLiquidity"]);
             //---
             if (symbol.ContainsKey("MarginHedged"))
-                conSymbol.MarginHedged = GetDouble(symbol["MarginHedged"]);
+                conSymbol.MarginHedged = ConvertHelper.TypeConversation<double>(symbol["MarginHedged"]);
             //---
             if (symbol.ContainsKey("MarginCurrency"))
-                conSymbol.MarginRateCurrency = GetDouble(symbol["MarginCurrency"]);
+                conSymbol.MarginRateCurrency = ConvertHelper.TypeConversation<double>(symbol["MarginCurrency"]);
             //---
             if (symbol.ContainsKey("SwapMode"))
-                conSymbol.SwapMode = (MTConSymbol.EnSwapMode)GetUInt(symbol["SwapMode"]);
+                conSymbol.SwapMode = (MTConSymbol.EnSwapMode)ConvertHelper.TypeConversation<uint>(symbol["SwapMode"]);
             //---
             if (symbol.ContainsKey("SwapLong"))
-                conSymbol.SwapLong = GetDouble(symbol["SwapLong"]);
+                conSymbol.SwapLong = ConvertHelper.TypeConversation<double>(symbol["SwapLong"]);
             //---
             if (symbol.ContainsKey("SwapShort"))
-                conSymbol.SwapShort = GetDouble(symbol["SwapShort"]);
+                conSymbol.SwapShort = ConvertHelper.TypeConversation<double>(symbol["SwapShort"]);
             //---
             if (symbol.ContainsKey("Swap3Day"))
-                conSymbol.Swap3Day = GetInt(symbol["Swap3Day"]);
+                conSymbol.Swap3Day = ConvertHelper.TypeConversation<int>(symbol["Swap3Day"]);
             //---
             if (symbol.ContainsKey("TimeStart"))
-                conSymbol.TimeStart = GetLong(symbol["TimeStart"]);
+                conSymbol.TimeStart = ConvertHelper.TypeConversation<long>(symbol["TimeStart"]);
             //---
             if (symbol.ContainsKey("TimeExpiration"))
-                conSymbol.TimeExpiration = GetLong(symbol["TimeExpiration"]);
+                conSymbol.TimeExpiration = ConvertHelper.TypeConversation<long>(symbol["TimeExpiration"]);
             //---
             if (symbol.ContainsKey("SessionsQuotes"))
-                conSymbol.SessionsQuotes = ParsingSessions(symbol["SessionsQuotes"] as ArrayList);
+                conSymbol.SessionsQuotes = ParsingSessions(symbol["SessionsQuotes"]);
             //---
             if (symbol.ContainsKey("SessionsTrades"))
-                conSymbol.SessionsTrades = ParsingSessions(symbol["SessionsTrades"] as ArrayList);
+                conSymbol.SessionsTrades = ParsingSessions(symbol["SessionsTrades"]);
             //---
             if (symbol.ContainsKey("REFlags"))
-                conSymbol.REFlags = (MTConSymbol.EnRequestFlags)GetUInt(symbol["REFlags"]);
+                conSymbol.REFlags = (MTConSymbol.EnRequestFlags)ConvertHelper.TypeConversation<uint>(symbol["REFlags"]);
             //---
             if (symbol.ContainsKey("RETimeout"))
-                conSymbol.RETimeout = GetUInt(symbol["RETimeout"]);
+                conSymbol.RETimeout = ConvertHelper.TypeConversation<uint>(symbol["RETimeout"]);
             //---
             if (symbol.ContainsKey("IECheckMode"))
-                conSymbol.IECheckMode = (MTConSymbol.EnInstantMode)GetUInt(symbol["IECheckMode"]);
+                conSymbol.IECheckMode = (MTConSymbol.EnInstantMode)ConvertHelper.TypeConversation<uint>(symbol["IECheckMode"]);
             //---
             if (symbol.ContainsKey("IETimeout"))
-                conSymbol.IETimeout = GetUInt(symbol["IETimeout"]);
+                conSymbol.IETimeout = ConvertHelper.TypeConversation<uint>(symbol["IETimeout"]);
             //---
             if (symbol.ContainsKey("IESlipProfit"))
-                conSymbol.IESlipProfit = GetUInt(symbol["IESlipProfit"]);
+                conSymbol.IESlipProfit = ConvertHelper.TypeConversation<uint>(symbol["IESlipProfit"]);
             //---
             if (symbol.ContainsKey("IESlipLosing"))
-                conSymbol.IESlipLosing = GetUInt(symbol["IESlipLosing"]);
+                conSymbol.IESlipLosing = ConvertHelper.TypeConversation<uint>(symbol["IESlipLosing"]);
             //---
             if (symbol.ContainsKey("IEVolumeMax"))
-                conSymbol.IEVolumeMax = GetULong(symbol["IEVolumeMax"]);
+                conSymbol.IEVolumeMax = ConvertHelper.TypeConversation<ulong>(symbol["IEVolumeMax"]);
             //---
             if (symbol.ContainsKey("IEVolumeMaxExt"))
-                conSymbol.IEVolumeMax = GetULong(symbol["IEVolumeMaxExt"]);
+                conSymbol.IEVolumeMax = ConvertHelper.TypeConversation<ulong>(symbol["IEVolumeMaxExt"]);
             //---
             if (symbol.ContainsKey("PriceSettle"))
-                conSymbol.PriceSettle = GetDouble(symbol["PriceSettle"]);
+                conSymbol.PriceSettle = ConvertHelper.TypeConversation<double>(symbol["PriceSettle"]);
             //---
             if (symbol.ContainsKey("PriceLimitMax"))
-                conSymbol.PriceLimitMax = GetDouble(symbol["PriceLimitMax"]);
+                conSymbol.PriceLimitMax = ConvertHelper.TypeConversation<double>(symbol["PriceLimitMax"]);
             //---
             if (symbol.ContainsKey("PriceLimitMin"))
-                conSymbol.PriceLimitMin = GetDouble(symbol["PriceLimitMin"]);
+                conSymbol.PriceLimitMin = ConvertHelper.TypeConversation<double>(symbol["PriceLimitMin"]);
             //---
             if (symbol.ContainsKey("PriceStrike"))
-                conSymbol.PriceStrike = GetDouble(symbol["PriceStrike"]);
+                conSymbol.PriceStrike = ConvertHelper.TypeConversation<double>(symbol["PriceStrike"]);
             //---
             if (symbol.ContainsKey("OptionsMode"))
-                conSymbol.OptionsMode = (MTConSymbol.EnOptionMode)GetUInt(symbol["OptionsMode"]);
+                conSymbol.OptionsMode = (MTConSymbol.EnOptionMode)ConvertHelper.TypeConversation<uint>(symbol["OptionsMode"]);
             //---
             if (symbol.ContainsKey("FaceValue"))
-                conSymbol.FaceValue = GetDouble(symbol["FaceValue"]);
+                conSymbol.FaceValue = ConvertHelper.TypeConversation<double>(symbol["FaceValue"]);
             //---
             if (symbol.ContainsKey("AccruedInterest"))
-                conSymbol.AccruedInterest = GetDouble(symbol["AccruedInterest"]);
+                conSymbol.AccruedInterest = ConvertHelper.TypeConversation<double>(symbol["AccruedInterest"]);
             //---
             if (symbol.ContainsKey("SpliceType"))
-                conSymbol.SpliceType = (MTConSymbol.EnSpliceType)GetUInt(symbol["SpliceType"]);
+                conSymbol.SpliceType = (MTConSymbol.EnSpliceType)ConvertHelper.TypeConversation<uint>(symbol["SpliceType"]);
             //---
             if (symbol.ContainsKey("SpliceTimeType"))
-                conSymbol.SpliceTimeType = (MTConSymbol.EnSpliceTimeType)GetUInt(symbol["SpliceTimeType"]);
+                conSymbol.SpliceTimeType = (MTConSymbol.EnSpliceTimeType)ConvertHelper.TypeConversation<uint>(symbol["SpliceTimeType"]);
             //---
             if (symbol.ContainsKey("SpliceTimeDays"))
-                conSymbol.SpliceTimeDays = GetUInt(symbol["SpliceTimeDays"]);
+                conSymbol.SpliceTimeDays = ConvertHelper.TypeConversation<uint>(symbol["SpliceTimeDays"]);
             //---
             if (symbol.ContainsKey("IEFlags"))
-                conSymbol.IEFlags = (MTConSymbol.EnTradeInstantFlags)GetUInt(symbol["IEFlags"]);
+                conSymbol.IEFlags = (MTConSymbol.EnTradeInstantFlags)ConvertHelper.TypeConversation<uint>(symbol["IEFlags"]);
             //---
             if (symbol.ContainsKey("Category"))
                 conSymbol.Category = ConvertHelper.TypeConversation<string>(symbol["Category"]);
@@ -666,16 +641,16 @@ namespace MetaQuotes.MT5WebAPI.Common.Protocol
                 conSymbol.Exchange = ConvertHelper.TypeConversation<string>(symbol["CFI"]);
             //---
             if (symbol.ContainsKey("Sector"))
-                conSymbol.Sector = (MTConSymbol.EnSectors)GetUInt(symbol["Sector"]);
+                conSymbol.Sector = (MTConSymbol.EnSectors)ConvertHelper.TypeConversation<uint>(symbol["Sector"]);
             //---
             if (symbol.ContainsKey("Industry"))
-                conSymbol.Industry = (MTConSymbol.EnIndustries)GetUInt(symbol["Industry"]);
+                conSymbol.Industry = (MTConSymbol.EnIndustries)ConvertHelper.TypeConversation<uint>(symbol["Industry"]);
             //---
             if (symbol.ContainsKey("Country"))
                 conSymbol.Country = ConvertHelper.TypeConversation<string>(symbol["Country"]);
             //---
             if (symbol.ContainsKey("SubscriptionsDelay"))
-                conSymbol.SubscriptionsDelay = GetUInt(symbol["SubscriptionsDelay"]);
+                conSymbol.SubscriptionsDelay = ConvertHelper.TypeConversation<uint>(symbol["SubscriptionsDelay"]);
             //---
             return conSymbol;
         }
@@ -683,109 +658,120 @@ namespace MetaQuotes.MT5WebAPI.Common.Protocol
         /// get data for MarginRateMaintenance
         /// </summary>
         /// <param name="symbol">array of json data</param>
-        private static Dictionary<MTConSymbol.EnMarginRateTypes, double> MarginRateMaintenance(Dictionary<string, object> symbol)
+
+        private static Dictionary<MTConSymbol.EnMarginRateTypes, double> MarginRateMaintenance(Dictionary<string, JsonElement> symbol)
         {
             Dictionary<MTConSymbol.EnMarginRateTypes, double> result = new()
-            {
-        {MTConSymbol.EnMarginRateTypes.MARGIN_RATE_BUY,0.0},
-        {MTConSymbol.EnMarginRateTypes.MARGIN_RATE_SELL,0.0},
-        {MTConSymbol.EnMarginRateTypes.MARGIN_RATE_BUY_LIMIT,0.0},
-        {MTConSymbol.EnMarginRateTypes.MARGIN_RATE_SELL_LIMIT,0.0},
-        {MTConSymbol.EnMarginRateTypes.MARGIN_RATE_BUY_STOP,0.0},
-        {MTConSymbol.EnMarginRateTypes.MARGIN_RATE_SELL_STOP,0.0},
-        {MTConSymbol.EnMarginRateTypes.MARGIN_RATE_BUY_STOP_LIMIT,0.0},
-        {MTConSymbol.EnMarginRateTypes.MARGIN_RATE_SELL_STOP_LIMIT,0.0}
-      };
+    {
+        { MTConSymbol.EnMarginRateTypes.MARGIN_RATE_BUY, 0.0 },
+        { MTConSymbol.EnMarginRateTypes.MARGIN_RATE_SELL, 0.0 },
+        { MTConSymbol.EnMarginRateTypes.MARGIN_RATE_BUY_LIMIT, 0.0 },
+        { MTConSymbol.EnMarginRateTypes.MARGIN_RATE_SELL_LIMIT, 0.0 },
+        { MTConSymbol.EnMarginRateTypes.MARGIN_RATE_BUY_STOP, 0.0 },
+        { MTConSymbol.EnMarginRateTypes.MARGIN_RATE_SELL_STOP, 0.0 },
+        { MTConSymbol.EnMarginRateTypes.MARGIN_RATE_BUY_STOP_LIMIT, 0.0 },
+        { MTConSymbol.EnMarginRateTypes.MARGIN_RATE_SELL_STOP_LIMIT, 0.0 }
+    };
+
             //---
-            if (symbol.ContainsKey("MarginMaintenanceBuy"))
-                result[MTConSymbol.EnMarginRateTypes.MARGIN_RATE_BUY] = GetDouble(symbol["MarginMaintenanceBuy"]);
+            if (symbol.TryGetValue("MarginMaintenanceBuy", out var marginMaintenanceBuy))
+                result[MTConSymbol.EnMarginRateTypes.MARGIN_RATE_BUY] = ConvertHelper.TypeConversation<double>(marginMaintenanceBuy);
             //---
-            if (symbol.ContainsKey("MarginMaintenanceSell"))
-                result[MTConSymbol.EnMarginRateTypes.MARGIN_RATE_SELL] = GetDouble(symbol["MarginMaintenanceSell"]);
+            if (symbol.TryGetValue("MarginMaintenanceSell", out var marginMaintenanceSell))
+                result[MTConSymbol.EnMarginRateTypes.MARGIN_RATE_SELL] = ConvertHelper.TypeConversation<double>(marginMaintenanceSell);
             //---
-            if (symbol.ContainsKey("MarginMaintenanceBuyLimit"))
-                result[MTConSymbol.EnMarginRateTypes.MARGIN_RATE_BUY_LIMIT] = GetDouble(symbol["MarginMaintenanceBuyLimit"]);
+            if (symbol.TryGetValue("MarginMaintenanceBuyLimit", out var marginMaintenanceBuyLimit))
+                result[MTConSymbol.EnMarginRateTypes.MARGIN_RATE_BUY_LIMIT] = ConvertHelper.TypeConversation<double>(marginMaintenanceBuyLimit);
             //---
-            if (symbol.ContainsKey("MarginMaintenanceSellLimit"))
-                result[MTConSymbol.EnMarginRateTypes.MARGIN_RATE_SELL_LIMIT] = GetDouble(symbol["MarginMaintenanceSellLimit"]);
+            if (symbol.TryGetValue("MarginMaintenanceSellLimit", out var marginMaintenanceSellLimit))
+                result[MTConSymbol.EnMarginRateTypes.MARGIN_RATE_SELL_LIMIT] = ConvertHelper.TypeConversation<double>(marginMaintenanceSellLimit);
             //---
-            if (symbol.ContainsKey("MarginMaintenanceBuyStop"))
-                result[MTConSymbol.EnMarginRateTypes.MARGIN_RATE_BUY_STOP] = GetDouble(symbol["MarginMaintenanceBuyStop"]);
+            if (symbol.TryGetValue("MarginMaintenanceBuyStop", out var marginMaintenanceBuyStop))
+                result[MTConSymbol.EnMarginRateTypes.MARGIN_RATE_BUY_STOP] = ConvertHelper.TypeConversation<double>(marginMaintenanceBuyStop);
             //---
-            if (symbol.ContainsKey("MarginMaintenanceSellStop"))
-                result[MTConSymbol.EnMarginRateTypes.MARGIN_RATE_SELL_STOP] = GetDouble(symbol["MarginMaintenanceSellStop"]);
+            if (symbol.TryGetValue("MarginMaintenanceSellStop", out var marginMaintenanceSellStop))
+                result[MTConSymbol.EnMarginRateTypes.MARGIN_RATE_SELL_STOP] = ConvertHelper.TypeConversation<double>(marginMaintenanceSellStop);
             //---
-            if (symbol.ContainsKey("MarginMaintenanceBuyStopLimit"))
-                result[MTConSymbol.EnMarginRateTypes.MARGIN_RATE_BUY_STOP_LIMIT] = GetDouble(symbol["MarginMaintenanceBuyStopLimit"]);
+            if (symbol.TryGetValue("MarginMaintenanceBuyStopLimit", out var marginMaintenanceBuyStopLimit))
+                result[MTConSymbol.EnMarginRateTypes.MARGIN_RATE_BUY_STOP_LIMIT] = ConvertHelper.TypeConversation<double>(marginMaintenanceBuyStopLimit);
             //---
-            if (symbol.ContainsKey("MarginMaintenanceSellStopLimit"))
-                result[MTConSymbol.EnMarginRateTypes.MARGIN_RATE_SELL_STOP_LIMIT] = GetDouble(symbol["MarginMaintenanceSellStopLimit"]);
+            if (symbol.TryGetValue("MarginMaintenanceSellStopLimit", out var marginMaintenanceSellStopLimit))
+                result[MTConSymbol.EnMarginRateTypes.MARGIN_RATE_SELL_STOP_LIMIT] = ConvertHelper.TypeConversation<double>(marginMaintenanceSellStopLimit);
             //---
             return result;
         }
-        /// <summary>
+
         /// get data for MarginRateInitial
         /// </summary>
         /// <param name="symbol">array of json data</param>
-        private static Dictionary<MTConSymbol.EnMarginRateTypes, double> GetMarginRateInitial(Dictionary<string, object> symbol)
+        private static Dictionary<MTConSymbol.EnMarginRateTypes, double> GetMarginRateInitial(Dictionary<string, JsonElement> symbol)
         {
             Dictionary<MTConSymbol.EnMarginRateTypes, double> result = new()
-            {
-        {MTConSymbol.EnMarginRateTypes.MARGIN_RATE_BUY,0.0},
-        {MTConSymbol.EnMarginRateTypes.MARGIN_RATE_SELL,0.0},
-        {MTConSymbol.EnMarginRateTypes.MARGIN_RATE_BUY_LIMIT,0.0},
-        {MTConSymbol.EnMarginRateTypes.MARGIN_RATE_SELL_LIMIT,0.0},
-        {MTConSymbol.EnMarginRateTypes.MARGIN_RATE_BUY_STOP,0.0},
-        {MTConSymbol.EnMarginRateTypes.MARGIN_RATE_SELL_STOP,0.0},
-        {MTConSymbol.EnMarginRateTypes.MARGIN_RATE_BUY_STOP_LIMIT,0.0},
-        {MTConSymbol.EnMarginRateTypes.MARGIN_RATE_SELL_STOP_LIMIT,0.0}
-      };
+    {
+        { MTConSymbol.EnMarginRateTypes.MARGIN_RATE_BUY, 0.0 },
+        { MTConSymbol.EnMarginRateTypes.MARGIN_RATE_SELL, 0.0 },
+        { MTConSymbol.EnMarginRateTypes.MARGIN_RATE_BUY_LIMIT, 0.0 },
+        { MTConSymbol.EnMarginRateTypes.MARGIN_RATE_SELL_LIMIT, 0.0 },
+        { MTConSymbol.EnMarginRateTypes.MARGIN_RATE_BUY_STOP, 0.0 },
+        { MTConSymbol.EnMarginRateTypes.MARGIN_RATE_SELL_STOP, 0.0 },
+        { MTConSymbol.EnMarginRateTypes.MARGIN_RATE_BUY_STOP_LIMIT, 0.0 },
+        { MTConSymbol.EnMarginRateTypes.MARGIN_RATE_SELL_STOP_LIMIT, 0.0 }
+    };
+
             //---
-            if (symbol.ContainsKey("MarginInitialBuy"))
-                result[MTConSymbol.EnMarginRateTypes.MARGIN_RATE_BUY] = GetDouble(symbol["MarginInitialBuy"]);
+            if (symbol.TryGetValue("MarginInitialBuy", out var marginInitialBuy))
+                result[MTConSymbol.EnMarginRateTypes.MARGIN_RATE_BUY] = ConvertHelper.TypeConversation<double>(marginInitialBuy);
             //---
-            if (symbol.ContainsKey("MarginInitialSell"))
-                result[MTConSymbol.EnMarginRateTypes.MARGIN_RATE_SELL] = GetDouble(symbol["MarginInitialSell"]);
+            if (symbol.TryGetValue("MarginInitialSell", out var marginInitialSell))
+                result[MTConSymbol.EnMarginRateTypes.MARGIN_RATE_SELL] = ConvertHelper.TypeConversation<double>(marginInitialSell);
             //---
-            if (symbol.ContainsKey("MarginInitialBuyLimit"))
-                result[MTConSymbol.EnMarginRateTypes.MARGIN_RATE_BUY_LIMIT] = GetDouble(symbol["MarginInitialBuyLimit"]);
+            if (symbol.TryGetValue("MarginInitialBuyLimit", out var marginInitialBuyLimit))
+                result[MTConSymbol.EnMarginRateTypes.MARGIN_RATE_BUY_LIMIT] = ConvertHelper.TypeConversation<double>(marginInitialBuyLimit);
             //---
-            if (symbol.ContainsKey("MarginInitialSellLimit"))
-                result[MTConSymbol.EnMarginRateTypes.MARGIN_RATE_SELL_LIMIT] = GetDouble(symbol["MarginInitialSellLimit"]);
+            if (symbol.TryGetValue("MarginInitialSellLimit", out var marginInitialSellLimit))
+                result[MTConSymbol.EnMarginRateTypes.MARGIN_RATE_SELL_LIMIT] = ConvertHelper.TypeConversation<double>(marginInitialSellLimit);
             //---
-            if (symbol.ContainsKey("MarginInitialBuyStop"))
-                result[MTConSymbol.EnMarginRateTypes.MARGIN_RATE_BUY_STOP] = GetDouble(symbol["MarginInitialBuyStop"]);
+            if (symbol.TryGetValue("MarginInitialBuyStop", out var marginInitialBuyStop))
+                result[MTConSymbol.EnMarginRateTypes.MARGIN_RATE_BUY_STOP] = ConvertHelper.TypeConversation<double>(marginInitialBuyStop);
             //---
-            if (symbol.ContainsKey("MarginInitialSellStop"))
-                result[MTConSymbol.EnMarginRateTypes.MARGIN_RATE_SELL_STOP] = GetDouble(symbol["MarginInitialSellStop"]);
+            if (symbol.TryGetValue("MarginInitialSellStop", out var marginInitialSellStop))
+                result[MTConSymbol.EnMarginRateTypes.MARGIN_RATE_SELL_STOP] = ConvertHelper.TypeConversation<double>(marginInitialSellStop);
             //---
-            if (symbol.ContainsKey("MarginInitialBuyStopLimit"))
-                result[MTConSymbol.EnMarginRateTypes.MARGIN_RATE_BUY_STOP_LIMIT] = GetDouble(symbol["MarginInitialBuyStopLimit"]);
+            if (symbol.TryGetValue("MarginInitialBuyStopLimit", out var marginInitialBuyStopLimit))
+                result[MTConSymbol.EnMarginRateTypes.MARGIN_RATE_BUY_STOP_LIMIT] = ConvertHelper.TypeConversation<double>(marginInitialBuyStopLimit);
             //---
-            if (symbol.ContainsKey("MarginInitialSellStopLimit"))
-                result[MTConSymbol.EnMarginRateTypes.MARGIN_RATE_SELL_STOP_LIMIT] = GetDouble(symbol["MarginInitialSellStopLimit"]);
+            if (symbol.TryGetValue("MarginInitialSellStopLimit", out var marginInitialSellStopLimit))
+                result[MTConSymbol.EnMarginRateTypes.MARGIN_RATE_SELL_STOP_LIMIT] = ConvertHelper.TypeConversation<double>(marginInitialSellStopLimit);
             //---
             return result;
         }
+
         /// <summary>
         /// Parsing sessions
         /// </summary>
         /// <param name="sessions">array of sessions</param>
         /// <returns></returns>
-        private static List<List<MTConSymbolSession>> ParsingSessions(ArrayList sessions)
+        private static List<List<MTConSymbolSession>> ParsingSessions(JsonElement sessions)
         {
-            if (sessions == null) return null;
+            if (sessions.ValueKind != JsonValueKind.Array)
+                return null;
+
             //---
             List<List<MTConSymbolSession>> result = new();
-            //---
-            foreach (object sessionInfo in sessions)
-            {
 
-                ArrayList sessionsInfo = sessionInfo as ArrayList;
-                if (sessionsInfo == null) result.Add(null);
-                //---
-                List<MTConSymbolSession> temp = ParsingSession(sessionsInfo);
-                if (temp != null) result.Add(temp);
+            foreach (JsonElement sessionInfo in sessions.EnumerateArray())
+            {
+                if (sessionInfo.ValueKind != JsonValueKind.Array)
+                {
+                    result.Add(null);
+                    continue;
+                }
+
+                List<MTConSymbolSession> temp = ParsingSession(sessionInfo);
+                if (temp != null)
+                {
+                    result.Add(temp);
+                }
             }
             //---
             return result;
@@ -795,23 +781,73 @@ namespace MetaQuotes.MT5WebAPI.Common.Protocol
         /// </summary>
         /// <param name="sessions">data from json</param>
         /// <returns></returns>
-        private static List<MTConSymbolSession> ParsingSession(ArrayList sessions)
+        private static List<MTConSymbolSession> ParsingSession(JsonElement sessions)
         {
-            if (sessions == null) return null;
+            if (sessions.ValueKind != JsonValueKind.Array)
+                return null;
+
             //---
             List<MTConSymbolSession> result = new();
-            //---
-            foreach (object sessionInfo in sessions)
+
+            foreach (JsonElement sessionInfo in sessions.EnumerateArray())
             {
-                Dictionary<string, object> sessionsInfo = sessionInfo as Dictionary<string, object>;
-                if (sessionsInfo == null) continue;
+                if (sessionInfo.ValueKind != JsonValueKind.Object)
+                    continue;
+
+                // Convert JsonElement to Dictionary<string, object>
+                Dictionary<string, object> sessionsInfo = ConvertJsonElementToDictionary(sessionInfo);
+
+                if (sessionsInfo == null)
+                    continue;
+
                 //--- parsing MTConSymbolSession
                 MTConSymbolSession temp = ParsingSession(sessionsInfo);
-                if (temp != null) result.Add(temp);
+                if (temp != null)
+                {
+                    result.Add(temp);
+                }
             }
             //---
             return result;
         }
+
+        // Helper method to convert JsonElement to Dictionary<string, object>
+        private static Dictionary<string, object> ConvertJsonElementToDictionary(JsonElement element)
+        {
+            if (element.ValueKind != JsonValueKind.Object)
+                return null;
+
+            Dictionary<string, object> result = new();
+
+            foreach (JsonProperty property in element.EnumerateObject())
+            {
+                string key = property.Name;
+                object value = null;
+
+                switch (property.Value.ValueKind)
+                {
+                    case JsonValueKind.String:
+                        value = property.Value.GetString();
+                        break;
+
+                    case JsonValueKind.Number:
+                        // Adjust this based on your actual type conversion logic
+                        value = property.Value.GetDouble();
+                        break;
+
+                    // Handle other value kinds as needed
+
+                    default:
+                        // Handle unsupported types or throw an exception
+                        break;
+                }
+
+                result[key] = value;
+            }
+
+            return result;
+        }
+
         /// <summary>
         /// Parsing object MTConSymbolSession
         /// </summary>
@@ -841,7 +877,7 @@ namespace MetaQuotes.MT5WebAPI.Common.Protocol
         /// parsing one MTConGroupSymbol
         /// </summary>
         /// <param name="groupSymbol"></param>
-        public static MTConGroupSymbol ParseGroupSymbol(Dictionary<string, object> groupSymbol)
+        public static MTConGroupSymbol ParseGroupSymbol(Dictionary<string, JsonElement> groupSymbol)
         {
             if (groupSymbol == null) return null;
             MTConGroupSymbol conSymbol = new();
@@ -850,162 +886,134 @@ namespace MetaQuotes.MT5WebAPI.Common.Protocol
                 conSymbol.Path = ConvertHelper.TypeConversation<string>(groupSymbol["Path"]);
             //---
             if (groupSymbol.ContainsKey("TradeMode"))
-                conSymbol.TradeMode = (MTConSymbol.EnTradeMode)GetUInt(groupSymbol["TradeMode"]);
+                conSymbol.TradeMode = (MTConSymbol.EnTradeMode)ConvertHelper.TypeConversation<uint>(groupSymbol["TradeMode"]);
             //---
             if (groupSymbol.ContainsKey("ExecMode"))
-                conSymbol.ExecMode = (MTConSymbol.EnCalcMode)GetUInt(groupSymbol["ExecMode"]);
+                conSymbol.ExecMode = (MTConSymbol.EnCalcMode)ConvertHelper.TypeConversation<uint>(groupSymbol["ExecMode"]);
             //---
             if (groupSymbol.ContainsKey("FillFlags"))
-                conSymbol.FillFlags = (MTConSymbol.EnFillingFlags)GetUInt(groupSymbol["FillFlags"]);
+                conSymbol.FillFlags = (MTConSymbol.EnFillingFlags)ConvertHelper.TypeConversation<uint>(groupSymbol["FillFlags"]);
             //---
             if (groupSymbol.ContainsKey("ExpirFlags"))
-                conSymbol.ExpirFlags = (MTConSymbol.EnExpirationFlags)GetUInt(groupSymbol["ExpirFlags"]);
+                conSymbol.ExpirFlags = (MTConSymbol.EnExpirationFlags)ConvertHelper.TypeConversation<uint>(groupSymbol["ExpirFlags"]);
             //---
             if (groupSymbol.ContainsKey("OrderFlags"))
-                conSymbol.OrderFlags = (MTConSymbol.EnOrderFlags)GetUInt(groupSymbol["OrderFlags"]);
+                conSymbol.OrderFlags = (MTConSymbol.EnOrderFlags)ConvertHelper.TypeConversation<uint>(groupSymbol["OrderFlags"]);
             //---
             if (groupSymbol.ContainsKey("SpreadDiff"))
-                conSymbol.SpreadDiff = GetInt(groupSymbol["SpreadDiff"]);
+                conSymbol.SpreadDiff = ConvertHelper.TypeConversation<int>(groupSymbol["SpreadDiff"]);
             //---
             if (groupSymbol.ContainsKey("SpreadDiffBalance"))
-                conSymbol.SpreadDiffBalance = GetInt(groupSymbol["SpreadDiffBalance"]);
+                conSymbol.SpreadDiffBalance = ConvertHelper.TypeConversation<int>(groupSymbol["SpreadDiffBalance"]);
             //---
             if (groupSymbol.ContainsKey("StopsLevel"))
-                conSymbol.StopsLevel = GetInt(groupSymbol["StopsLevel"]);
+                conSymbol.StopsLevel = ConvertHelper.TypeConversation<int>(groupSymbol["StopsLevel"]);
             //---
             if (groupSymbol.ContainsKey("FreezeLevel"))
-                conSymbol.FreezeLevel = GetInt(groupSymbol["FreezeLevel"]);
+                conSymbol.FreezeLevel = ConvertHelper.TypeConversation<int>(groupSymbol["FreezeLevel"]);
             //---
             if (groupSymbol.ContainsKey("VolumeMin"))
-                conSymbol.VolumeMin = GetULong(groupSymbol["VolumeMin"]);
+                conSymbol.VolumeMin = ConvertHelper.TypeConversation<ulong>(groupSymbol["VolumeMin"]);
             //---
             if (groupSymbol.ContainsKey("VolumeMax"))
-                conSymbol.VolumeMax = GetULong(groupSymbol["VolumeMax"]);
+                conSymbol.VolumeMax = ConvertHelper.TypeConversation<ulong>(groupSymbol["VolumeMax"]);
             //---
             if (groupSymbol.ContainsKey("VolumeStep"))
-                conSymbol.VolumeStep = GetULong(groupSymbol["VolumeStep"]);
+                conSymbol.VolumeStep = ConvertHelper.TypeConversation<ulong>(groupSymbol["VolumeStep"]);
             //---
             if (groupSymbol.ContainsKey("VolumeLimit"))
-                conSymbol.VolumeLimit = GetULong(groupSymbol["VolumeLimit"]);
+                conSymbol.VolumeLimit = ConvertHelper.TypeConversation<ulong>(groupSymbol["VolumeLimit"]);
             //---
             if (groupSymbol.ContainsKey("MarginCheckMode"))
-                conSymbol.MarginFlags = conSymbol.MarginCheckMode = (MTConSymbol.EnMarginFlags)GetUInt(groupSymbol["MarginCheckMode"]);
+                conSymbol.MarginFlags = conSymbol.MarginCheckMode = (MTConSymbol.EnMarginFlags)ConvertHelper.TypeConversation<ulong>(groupSymbol["MarginCheckMode"]);
             //---
             if (groupSymbol.ContainsKey("MarginFlags"))
-                conSymbol.MarginFlags = conSymbol.MarginCheckMode = (MTConSymbol.EnMarginFlags)GetUInt(groupSymbol["MarginFlags"]);
+                conSymbol.MarginFlags = conSymbol.MarginCheckMode = (MTConSymbol.EnMarginFlags)ConvertHelper.TypeConversation<uint>(groupSymbol["MarginFlags"]);
             //---
             if (groupSymbol.ContainsKey("MarginInitial"))
-                conSymbol.MarginInitial = GetDouble(groupSymbol["MarginInitial"]);
+                conSymbol.MarginInitial = ConvertHelper.TypeConversation<double>(groupSymbol["MarginInitial"]);
             //---
             if (groupSymbol.ContainsKey("MarginMaintenance"))
-                conSymbol.MarginMaintenance = GetDouble(groupSymbol["MarginMaintenance"]);
+                conSymbol.MarginMaintenance = ConvertHelper.TypeConversation<double>(groupSymbol["MarginMaintenance"]);
             //---
             conSymbol.MarginRateInitial = GetMarginRateInitial(groupSymbol);
             conSymbol.MarginRateMaintenance = MarginRateMaintenance(groupSymbol);
+
+
             //---
             if (groupSymbol.ContainsKey("MarginLiquidity"))
-                conSymbol.MarginRateLiquidity = GetDouble(groupSymbol["MarginLiquidity"]);
+                conSymbol.MarginRateLiquidity = ConvertHelper.TypeConversation<double>(groupSymbol["MarginLiquidity"]);
             //---
             if (groupSymbol.ContainsKey("MarginHedged"))
-                conSymbol.MarginHedged = GetDouble(groupSymbol["MarginHedged"]);
+                conSymbol.MarginHedged = ConvertHelper.TypeConversation<double>(groupSymbol["MarginHedged"]);
             //---
             if (groupSymbol.ContainsKey("MarginCurrency"))
-                conSymbol.MarginRateCurrency = GetDouble(groupSymbol["MarginCurrency"]);
+                conSymbol.MarginRateCurrency = ConvertHelper.TypeConversation<double>(groupSymbol["MarginCurrency"]);
             //--- deprecated
             if (groupSymbol.ContainsKey("MarginLong"))
-                conSymbol.MarginLong = GetDouble(groupSymbol["MarginLong"]);
+                conSymbol.MarginLong = ConvertHelper.TypeConversation<double>(groupSymbol["MarginLong"]);
 
             if (groupSymbol.ContainsKey("MarginShort"))
-                conSymbol.MarginShort = GetDouble(groupSymbol["MarginShort"]);
+                conSymbol.MarginShort = ConvertHelper.TypeConversation<double>(groupSymbol["MarginShort"]);
 
             if (groupSymbol.ContainsKey("MarginLimit"))
-                conSymbol.MarginLimit = GetDouble(groupSymbol["MarginLimit"]);
+                conSymbol.MarginLimit = ConvertHelper.TypeConversation<double>(groupSymbol["MarginLimit"]);
 
             if (groupSymbol.ContainsKey("MarginStop"))
-                conSymbol.MarginStop = GetDouble(groupSymbol["MarginStop"]);
+                conSymbol.MarginStop = ConvertHelper.TypeConversation<double>(groupSymbol["MarginStop"]);
 
             if (groupSymbol.ContainsKey("MarginStopLimit"))
-                conSymbol.MarginStopLimit = GetDouble(groupSymbol["MarginStopLimit"]);
+                conSymbol.MarginStopLimit = ConvertHelper.TypeConversation<double>(groupSymbol["MarginStopLimit"]);
             //---
             if (groupSymbol.ContainsKey("SwapMode"))
-                conSymbol.SwapMode = (MTConSymbol.EnSwapMode)GetUInt(groupSymbol["SwapMode"]);
+                conSymbol.SwapMode = (MTConSymbol.EnSwapMode)ConvertHelper.TypeConversation<uint>(groupSymbol["SwapMode"]);
             //---
             if (groupSymbol.ContainsKey("SwapLong"))
-                conSymbol.SwapLong = GetDouble(groupSymbol["SwapLong"]);
+                conSymbol.SwapLong = ConvertHelper.TypeConversation<double>(groupSymbol["SwapLong"]);
             //---
             if (groupSymbol.ContainsKey("SwapShort"))
-                conSymbol.SwapShort = GetDouble(groupSymbol["SwapShort"]);
+                conSymbol.SwapShort = ConvertHelper.TypeConversation<double>(groupSymbol["SwapShort"]);
             //---
             if (groupSymbol.ContainsKey("Swap3Day"))
-                conSymbol.Swap3Day = GetInt(groupSymbol["Swap3Day"]);
+                conSymbol.Swap3Day = ConvertHelper.TypeConversation<int>(groupSymbol["Swap3Day"]);
             //---
             if (groupSymbol.ContainsKey("REFlags"))
-                conSymbol.REFlags = (MTConGroupSymbol.EnREFlags)GetUInt(groupSymbol["REFlags"]);
+                conSymbol.REFlags = (MTConGroupSymbol.EnREFlags)ConvertHelper.TypeConversation<uint>(groupSymbol["REFlags"]);
             //---
             if (groupSymbol.ContainsKey("RETimeout"))
-                conSymbol.RETimeout = GetUInt(groupSymbol["RETimeout"]);
+                conSymbol.RETimeout = ConvertHelper.TypeConversation<uint>(groupSymbol["RETimeout"]);
             //---
             if (groupSymbol.ContainsKey("IEFlags"))
-                conSymbol.IEFlags = GetUInt(groupSymbol["IEFlags"]);
+                conSymbol.IEFlags = ConvertHelper.TypeConversation<uint>(groupSymbol["IEFlags"]);
             //---
             if (groupSymbol.ContainsKey("IECheckMode"))
-                conSymbol.IECheckMode = GetUInt(groupSymbol["IECheckMode"]);
+                conSymbol.IECheckMode = ConvertHelper.TypeConversation<uint>(groupSymbol["IECheckMode"]);
             //---
             if (groupSymbol.ContainsKey("IETimeout"))
-                conSymbol.IETimeout = GetUInt(groupSymbol["IETimeout"]);
+                conSymbol.IETimeout = ConvertHelper.TypeConversation<uint>(groupSymbol["IETimeout"]);
             //---
             if (groupSymbol.ContainsKey("IESlipProfit"))
-                conSymbol.IESlipProfit = GetUInt(groupSymbol["IESlipProfit"]);
+                conSymbol.IESlipProfit = ConvertHelper.TypeConversation<uint>(groupSymbol["IESlipProfit"]);
             //---
             if (groupSymbol.ContainsKey("IESlipLosing"))
-                conSymbol.IESlipLosing = GetUInt(groupSymbol["IESlipLosing"]);
+                conSymbol.IESlipLosing = ConvertHelper.TypeConversation<uint>(groupSymbol["IESlipLosing"]);
             //---
             if (groupSymbol.ContainsKey("IEVolumeMax"))
-                conSymbol.IEVolumeMax = GetULong(groupSymbol["IEVolumeMax"]);
+                conSymbol.IEVolumeMax = ConvertHelper.TypeConversation<ulong>(groupSymbol["IEVolumeMax"]);
             //---
             if (groupSymbol.ContainsKey("PermissionsFlags"))
-                conSymbol.PermissionsFlags = (MTConGroupSymbol.EnPermissionsFlags)GetUInt(groupSymbol["PermissionsFlags"]);
+                conSymbol.PermissionsFlags = (MTConGroupSymbol.EnPermissionsFlags)ConvertHelper.TypeConversation<uint>(groupSymbol["PermissionsFlags"]);
             //---
             if (groupSymbol.ContainsKey("PermissionsBookdepth"))
-                conSymbol.BookDepthLimit = GetUInt(groupSymbol["PermissionsBookdepth"]);
+                conSymbol.BookDepthLimit = ConvertHelper.TypeConversation<uint>(groupSymbol["PermissionsBookdepth"]);
             //---
             return conSymbol;
         }
-        private static uint GetUInt(object obj)
-        {
-            string temp = ConvertHelper.TypeConversation<string>(obj);
-            //---
-            return temp == "default" ? MTConGroupSymbol.DEFAULT_VALUE_UINT : ConvertHelper.TypeConversation<UInt32>(obj);
-        }
 
-        private static double GetDouble(object obj)
+        protected override MTConSymbol Parse(Dictionary<string, JsonElement> dictionary)
         {
-            string temp = ConvertHelper.TypeConversation<string>(obj);
-            //---
-            return temp == "default" ? MTConGroupSymbol.DEFAULT_VALUE_DOUBLE : ConvertHelper.TypeConversation<double>(obj);
+            throw new NotImplementedException();
         }
-
-        private static int GetInt(object obj)
-        {
-            string temp = ConvertHelper.TypeConversation<string>(obj);
-            //---
-            return temp == "default" ? MTConGroupSymbol.DEFAULT_VALUE_INT : ConvertHelper.TypeConversation<Int32>(obj);
-        }
-
-        private static ulong GetULong(object obj)
-        {
-            string temp = ConvertHelper.TypeConversation<string>(obj);
-            //---
-            return temp == "default" ? MTConGroupSymbol.DEFAULT_VALUE_UINT64 : ConvertHelper.TypeConversation<UInt64>(obj);
-        }
-
-        private static long GetLong(object obj)
-        {
-            string temp = ConvertHelper.TypeConversation<string>(obj);
-            //---
-            return temp == "default" ? MTConGroupSymbol.DEFAULT_VALUE_INT64 : ConvertHelper.TypeConversation<Int64>(obj);
-        }
-
     }
     /// <summary>
     /// class get json from object
